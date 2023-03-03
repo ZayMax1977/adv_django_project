@@ -1,25 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>{{ current_rubric.name }}</title>
-</head>
-<body>
-    <h1>Объявление</h1>
-    <div>
-        <a href="{% url 'index'  %}">Главная</a>
-        {% for rubric in rubrics %}
-            <a href="{% url 'by_rubric' rubric.pk %}">{{ rubric.name }}</a>
-        {% endfor %}
-    </div>
-    <a href="{% url 'add' %}">Добавить</a>
-    {% for adv in advs_by_rub %}
+{% extends "layout/basic.html" %}
+
+{% block title %}{{ current_rubric.name }}{% endblock %}
+
+{% block content %}
+<h2>Рубрика: {{ current_rubric.name }}</h2>
+
+{% for adv in advs_by_rub %}
     <div>
         <h2>{{ adv.title }}</h2>
         <p>{{ adv.content }}</p>
         <p>{{ adv.published|date:'d.m.Y H:i:s' }}</p>
     </div>
     {%  endfor %}
+{% endblock %}
 
-</body>
-</html>
