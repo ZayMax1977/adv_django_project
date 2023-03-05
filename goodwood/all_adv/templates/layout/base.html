@@ -9,7 +9,7 @@
     <h1>Объявления</h1>
 </header>
 <nav>
-    <a href ='{% url "index" %}'>Главная</a>
+    <a href ='{% url "all_advs" %}'>Главная</a>
     <a href ='{% url "add" %}'>Добавить</a>
     {% for rubric in rubrics %}
         <a href ='{% url "by_rubric" rubric.pk %}'>{{ rubric.name }}</a>
@@ -21,4 +21,5 @@
 </section>
 
 </body>
+
 </html>

@@ -7,14 +7,15 @@ from all_adv.forms import AdvForm
 from all_adv.models import Adv, Rubric
 
 
-def index(requests):
+
+def all_advs(requests):
     advs = Adv.objects.all()
     rubrics = Rubric.objects.all()
     context ={
         "advs": advs,
         "rubrics":rubrics
     }
-    return render(requests,'all_adv/index.html',    context)
+    return render(requests,'all_adv/all_advs.html',    context)
 
 def by_rubric(requests,rubric_id):
     advs_by_rub = Adv.objects.filter(rubric=rubric_id)
@@ -30,7 +31,7 @@ def by_rubric(requests,rubric_id):
 class AdvCreateView(CreateView):
     template_name = 'all_adv/create_form.html'
     form_class = AdvForm
-    success_url = reverse_lazy("index")
+    success_url = reverse_lazy("all_advs")
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

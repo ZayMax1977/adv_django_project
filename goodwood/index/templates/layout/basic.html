@@ -1,0 +1,66 @@
+{%  load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    <script src="{% static 'index/scripts/map-states.js' %}"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'index/style.css' %}">
+    <title>GoodWood</title>
+
+</head>
+<body>
+    <header class="clearfix">
+        <img src="{% static 'index/gw.png' %}" width="40" height="40" alt="logo">
+        <div class="logo-text">GoodWood</div>
+        <ul class="clearfix">
+            <li><a href="#">Главная</a></li>
+            <li><a href="#">Объявления</a></li>
+            <li><a href="#">Подать</a></li>
+            <li><a href="#">Интересно</a></li>
+            <li><a href="#">Контакты</a></li>
+            <li><a href="#">Регистрация</a></li>
+        </ul>
+        <a href="#" id="pull">Меню</a>
+    </header>
+
+{% block content %}
+    {% endblock content %}
+    <footer>
+    <div class="up-footer">
+        |<a href="about-us"> О нас </a>|
+        <a href=""> Сотрудники </a>
+        |<a href="contacts"> Контакты </a>|
+        <a href=""> Безопасность </a>
+        |<a href=""> Правила и политика </a>|
+        <a href=""> Отзывы </a>|<br>
+    </div>
+    <div class="bottom-footer">
+        <span>Copyright © 2022 goodwood.com, Все права защищены. </span>
+    </div>
+</footer>
+
+<script>
+    $(function() {
+			var pull 		= $('#pull');
+				menu 		= $('nav ul');
+				menuHeight	= menu.height();
+
+			$(pull).on('click', function(e) {
+				e.preventDefault();
+				menu.slideToggle();
+			});
+
+			$(window).resize(function(){
+        		var w = $(window).width();
+        		if(w > 320 && menu.is(':hidden')) {
+        			menu.removeAttr('style');
+        		}
+    		});
+		});
+
+</script>
+</body>
+</html>
