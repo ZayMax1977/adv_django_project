@@ -16,9 +16,9 @@
         <img src="{% static 'index/gw.png' %}" width="40" height="40" alt="logo">
         <div class="logo-text">GoodWood</div>
         <ul class="clearfix">
-            <li><a href="#">Главная</a></li>
-            <li><a href="#">Объявления</a></li>
-            <li><a href="#">Подать</a></li>
+            <li><a href="{% url  'index' %}">Главная</a></li>
+            <li><a href="{% url  'all_advs' %}">Объявления</a></li>
+            <li><a href="{% url  'add' %}">Подать</a></li>
             <li><a href="#">Интересно</a></li>
             <li><a href="#">Контакты</a></li>
             <li><a href="#">Регистрация</a></li>
@@ -26,8 +26,8 @@
         <a href="#" id="pull">Меню</a>
     </header>
 
-{% block content %}
-    {% endblock content %}
+{% block content %} {% endblock content %}
+
     <footer>
     <div class="up-footer">
         |<a href="about-us"> О нас </a>|

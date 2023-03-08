@@ -6,7 +6,7 @@
 {% block content %}
 <h2>Рубрика: {{ current_rubric.name }}</h2>
 
-{% for adv in advs_by_rub %}
+{% for adv in advs_by_subrub %}
     <div class="adv-card">
         <h2>{{ adv.title }}</h2>
         <p>{{ adv.content }}</p>
@@ -15,4 +15,3 @@
     </div>
     {%  endfor %}
 {% endblock %}
-

@@ -5,28 +5,61 @@ from django.views.generic import CreateView
 
 from all_adv.forms import AdvForm
 from all_adv.models import Adv, Rubric
-
+from all_adv.templates.all_adv.rubrics import SUB_RUBRICS_ARR, RUBRIC_ARR
 
 
 def all_advs(requests):
-    advs = Adv.objects.all()
+    advs = Adv.objects.filter(is_active='True')
     rubrics = Rubric.objects.all()
     context ={
         "advs": advs,
-        "rubrics":rubrics
+        "rubrics":rubrics,
+        'SUB_RUBRICS_ARR': SUB_RUBRICS_ARR,
+
+        'RUBRIC_ARR': RUBRIC_ARR,
     }
-    return render(requests,'all_adv/all_advs.html',    context)
+    return render(requests,'all_adv/all_advs.html', context)
+
+def adv(requests,adv_id):
+
+    adv = Adv.objects.get(pk=adv_id)
+
+    rubrics = Rubric.objects.all()
+    # current_rubric = Rubric.objects.get(pk=adv_id)
+    context = {
+        'adv': adv,
+        'rubrics': rubrics,
+        # 'current_rubric': current_rubric
+    }
+    return render(requests,'all_adv/adv.html',context)
+
+
 
 def by_rubric(requests,rubric_id):
     advs_by_rub = Adv.objects.filter(rubric=rubric_id)
-    rubrics = Rubric.objects.all()
+    # rubrics = Rubric.objects.all()
     current_rubric = Rubric.objects.get(pk=rubric_id)
     context = {
         'advs_by_rub':advs_by_rub,
-        'rubrics': rubrics,
+        # 'rubrics': rubrics,
         'current_rubric': current_rubric
     }
     return render(requests,'all_adv/by_rubric.html',context)
+
+def by_subrubric(requests,subrubric):
+    advs_by_subrub = Adv.objects.filter(subrubric=subrubric)
+    # rubrics = Rubric.objects.all()
+    # current_rubric = Rubric.objects.get(pk=rubric_id)
+    # current_subrubric = Adv.objects.filter(subrubric=subrubric)
+
+    context = {
+        'advs_by_subrub':advs_by_subrub,
+        # 'rubrics': rubrics,
+        # 'current_rubric': current_rubric,
+        # "current_subrubric": current_subrubric,
+        # 'subrubric': subrubric
+    }
+    return render(requests,'all_adv/by_subrubric.html',context)
 
 class AdvCreateView(CreateView):
     template_name = 'all_adv/create_form.html'

@@ -2,13 +2,31 @@
 {% extends "layout/base.html" %}
 
 {% block content %}
+    Выбор по рубрикам:
+    {% for rubric in  rubrics %}
+        <a href="{% url 'by_rubric' rubric.pk %}">{{rubric.name}}.</a>
+    {% endfor %}<br>
+    Выбор по подрубрикам:
+    {% for r in SUB_RUBRICS_ARR %}
+        {% if r in RUBRIC_ARR %}
+            {{r}}
+        {% else %}
+            <a href="{% url 'by_subrubric' r %}">{{r}}</a>
+        {% endif  %}
+    {% endfor %}
+
+
     {% for adv in  advs %}
-    <div>
-        <h2>{{ adv.title }}</h2>
-        <p>{{ adv.content }}</p>
-        <p><a href="{% url 'by_rubric' adv.rubric.pk %}">{{ adv.rubric.name }}</a></p>
-        <p>{{ adv.published|date:"d.m.Y H:i:s" }}</p>
-    </div>
+        <div class="adv-card">
+            <h2><a href="{% url 'adv' adv.id %}">{{ adv.title }}</a></h2>
+            <p>ID: {{ adv.id }}</p>
+            <p>{{ adv.content }}</p>
+
+            Рубрика: <a href="{% url 'by_rubric' adv.rubric.pk %}">{{ adv.rubric.name }}. </a>
+            Подрубрика:<a href="{% url 'by_subrubric' adv.subrubric %}">{{adv.subrubric}}</a>
+
+            <p>{{ adv.published|date:"d.m.Y H:i:s" }}</p>
+        </div>
     {% endfor %}
 {% endblock %}
 

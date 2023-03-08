@@ -1,25 +1,85 @@
+
+{%  load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{% block title %}Главная{% endblock %}:: Доска объявлений</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    <script src="{% static 'index/scripts/map-states.js' %}"></script>
+<!--    ---------------Стили базового шаблона------------------------------------------->
+    <link rel="stylesheet" type="text/css" href="{% static 'index/style.css' %}">
+<!--    ---------------Стили контента(карточки объявления)------------------------------->
+    <link rel="stylesheet" type="text/css" href="{% static 'all_adv/style.css' %}">
+
+    <title>GoodWood</title>
+
 </head>
 <body>
-<header>
-    <h1>Объявления</h1>
-</header>
-<nav>
-    <a href ='{% url "all_advs" %}'>Главная</a>
-    <a href ='{% url "add" %}'>Добавить</a>
-    {% for rubric in rubrics %}
-        <a href ='{% url "by_rubric" rubric.pk %}'>{{ rubric.name }}</a>
-    {% endfor %}
-</nav>
-<section>
-    {% block content %}
+    <header class="clearfix">
+        <img src="{% static 'index/gw.png' %}" width="40" height="40" alt="logo">
+        <div class="logo-text">GoodWood</div>
+        <ul class="clearfix">
+            <li><a href="{% url  'index' %}">Главная</a></li>
+            <li><a href="{% url  'all_advs' %}">Объявления</a></li>
+            <li><a href="{% url  'add' %}">Подать</a></li>
+            <li><a href="#">Интересно</a></li>
+            <li><a href="#">Контакты</a></li>
+            <li><a href="#">Регистрация</a></li>
+        </ul>
+        <a href="#" id="pull">Меню</a>
+    </header>
+  <div class="block-popular">
+
+                <span class="popular-elem">Популярное в поиске:</span>
+                <a href="/">Toyota Camry 2008</a>,
+                <a href="/">Дом с видом на море</a>,
+                <a href="/"> Отдам котенка в хорошие руки</a> ,
+                <a href="/">Долгосрочно квартира в Краснодаре </a>
+                <br>
+
+                <span class="popular-elem">Популярные города:</span>
+                <a href="/">Краснодар</a>,
+                <a href="/">Хабаровск</a>,
+                <a href="/">Москва</a>,
+                <a href="/">Челябинск </a><br>
+            </div>
+{% block content %}
     {% endblock content %}
-</section>
 
+    <footer>
+    <div class="up-footer">
+        |<a href="about-us"> О нас </a>|
+        <a href=""> Сотрудники </a>
+        |<a href="contacts"> Контакты </a>|
+        <a href=""> Безопасность </a>
+        |<a href=""> Правила и политика </a>|
+        <a href=""> Отзывы </a>|<br>
+    </div>
+    <div class="bottom-footer">
+        <span>Copyright © 2022 goodwood.com, Все права защищены. </span>
+    </div>
+</footer>
+
+<script>
+    $(function() {
+			var pull 		= $('#pull');
+				menu 		= $('nav ul');
+				menuHeight	= menu.height();
+
+			$(pull).on('click', function(e) {
+				e.preventDefault();
+				menu.slideToggle();
+			});
+
+			$(window).resize(function(){
+        		var w = $(window).width();
+        		if(w > 320 && menu.is(':hidden')) {
+        			menu.removeAttr('style');
+        		}
+    		});
+		});
+
+</script>
 </body>
-
-</html>
