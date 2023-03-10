@@ -1,7 +1,23 @@
 {% extends "layout/base.html" %}
 
 {% block content %}
-    <div>
+
+<!--    -----------------фильтр по рубриккам-------------------->
+     Выбор по рубрикам:
+    {% for rubric in  rubrics %}
+        <a href="{% url 'by_rubric' rubric.pk %}">{{rubric.name}}.</a>
+    {% endfor %}<br>
+<!--    ---------------------фильтр по подрубрикам--------------->
+    Выбор по подрубрикам:
+    {% for r in SUB_RUBRICS_ARR %}
+        {% if r in RUBRIC_ARR %}
+            {{r}}
+        {% else %}
+            <a href="{% url 'by_subrubric' r %}">{{r}}</a>
+        {% endif  %}
+    {% endfor %}
+
+    <div class="adv-card">
         <p>{{ adv.title }}</p>
         <p>ID: {{ adv.id }}</p>
         <p>{{ adv.content }}</p>

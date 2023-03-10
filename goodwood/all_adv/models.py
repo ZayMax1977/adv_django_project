@@ -4,8 +4,6 @@ from all_adv.templates.all_adv.rubrics import SUB_RUBRICS
 
 
 class Adv(models.Model):
-
-
     is_active = models.BooleanField(default=False)
     title = models.CharField(max_length=50,verbose_name='Товар', help_text='Это хелп')
     content = models.TextField(null=True,blank =True,verbose_name='Описание')

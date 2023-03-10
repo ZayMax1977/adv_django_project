@@ -4,15 +4,33 @@
 {% block title %}{{ current_rubric.name }}{% endblock %}
 
 {% block content %}
-<h2>Рубрика: {{ current_rubric.name }}</h2>
+<!--    -----------------фильтр по рубриккам-------------------->
+     Выбор по рубрикам:
+    {% for rubric in  rubrics %}
+        <a href="{% url 'by_rubric' rubric.id %}">{{rubric.name}}.</a>
+    {% endfor %}<br>
+<!--    ---------------------фильтр по подрубрикам--------------->
+    Выбор по подрубрикам:
+    {% for r in SUB_RUBRICS_ARR %}
+        {% if r in RUBRIC_ARR %}
+            {{r}}
+        {% else %}
+            <a href="{% url 'by_subrubric' r %}">{{r}}</a>
+        {% endif  %}
+    {% endfor %}
 
+<h2>Рубрика: {{ current_rubric.name }}</h2>
+{% if  advs_by_rub|length > 0 %}
 {% for adv in advs_by_rub %}
     <div class="adv-card">
-        <h2>{{ adv.title }}</h2>
+        <h2><a href="{% url 'adv' adv.id %}">{{ adv.title }}</a></h2>
         <p>{{ adv.content }}</p>
-        <p>Подрубрика: {{ adv.subrubric }}</p>
+        <p>Подрубрика: <a href="{% url 'by_subrubric'  adv.subrubric %}">{{ adv.subrubric }}</a></p>
         <p>{{ adv.published|date:'d.m.Y H:i:s' }}</p>
     </div>
     {%  endfor %}
+{% else %}
+    В категории нет объявлений
+{% endif %}
 {% endblock %}
 
