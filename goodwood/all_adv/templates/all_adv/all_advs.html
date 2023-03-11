@@ -5,18 +5,18 @@
 <!--    -----------------фильтр по рубриккам-------------------->
      Выбор по рубрикам:
     {% for rubric in  rubrics %}
-        <a href="{% url 'by_rubric' rubric.pk %}">{{rubric.name}}.</a>
+        <a href="{{rubric.get_absolute_url}}">{{rubric.name}}.</a>
+
     {% endfor %}<br>
-<!--    ---------------------фильтр по подрубрикам--------------->
+    <!-- ---------------------фильтр по подрубрикам------------->
     Выбор по подрубрикам:
     {% for r in SUB_RUBRICS_ARR %}
         {% if r in RUBRIC_ARR %}
             {{r}}
         {% else %}
-            <a href="{% url 'by_subrubric' r %}?rubricName={{adv.rubric.name}} ">{{r}}</a>
+            <a href="{% url 'by_subrubric' r %} ">{{r}}</a>
         {% endif  %}
     {% endfor %}
-
 
     {% for adv in  advs %}
         <div class="adv-card">
@@ -24,11 +24,11 @@
             <p>ID: {{ adv.id }}</p>
             <p>{{ adv.content }}</p>
 
-            Рубрика: <a href="{% url 'by_rubric' adv.rubric.pk %}">{{ adv.rubric.name }}. </a>
-            Подрубрика:<a href="{% url 'by_subrubric'  adv.subrubric   %}?rubricName={{adv.rubric.name}} ">{{adv.subrubric}}</a>
+            Рубрика: <a href="{{adv.get_absolute_url}}">{{ adv.rubric.name }}. </a>
+            Подрубрика:<a href="{% url 'by_subrubric'  adv.subrubric   %} ">{{adv.subrubric}}</a>
+
 
             <p>{{ adv.published|date:"d.m.Y H:i:s" }}</p>
         </div>
     {% endfor %}
 {% endblock %}
-

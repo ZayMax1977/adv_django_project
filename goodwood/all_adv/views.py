@@ -1,4 +1,4 @@
-from django.http import HttpResponse, HttpRequest
+from django.http import HttpResponse
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
@@ -62,7 +62,7 @@ def by_subrubric(requests,subrubric):
         'SUB_RUBRICS_ARR': SUB_RUBRICS_ARR,
         'RUBRIC_ARR': RUBRIC_ARR,
         'rubrics': rubrics,
-        'current_rubric': requests.GET['rubricName'],
+        # 'current_rubric': requests.GET['rubricName'],
         'current_rubric_for_find' : current_rubric_for_find
         }
 
@@ -77,7 +77,6 @@ class AdvCreateView(CreateView):
         context = super().get_context_data(**kwargs)
         context['rubrics'] = Rubric.objects.all()
         return context
-
 
 
 

@@ -7,7 +7,7 @@
 <!--    -----------------фильтр по рубриккам-------------------->
      Выбор по рубрикам:
     {% for rubric in  rubrics %}
-        <a href="{% url 'by_rubric' rubric.id %}">{{rubric.name}}.</a>
+            <a href="{{rubric.get_absolute_url}}">{{rubric.name}}.</a>
     {% endfor %}<br>
 <!--    ---------------------фильтр по подрубрикам--------------->
     Выбор по подрубрикам:
@@ -20,6 +20,8 @@
     {% endfor %}
 
 <h2>Рубрика: {{ current_rubric.name }}</h2>
+
+
 {% if  advs_by_rub|length > 0 %}
 {% for adv in advs_by_rub %}
     <div class="adv-card">

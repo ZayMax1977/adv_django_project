@@ -1,14 +1,15 @@
 
 {% extends "layout/base.html" %}
 
-{% block title %}{{ current_rubric.name }}{% endblock %}
+{% block title %}{{ current_rubric_for_find }}{% endblock %}
 
 {% block content %}
 
 <!--    -----------------фильтр по рубриккам-------------------->
      Выбор по рубрикам:
     {% for rubric in  rubrics %}
-        <a href="{% url 'by_rubric' rubric.pk %}">{{rubric.name}}.</a>
+        <a href="{{rubric.get_absolute_url}}">{{rubric.name}}.</a>
+
     {% endfor %}<br>
 <!--    ---------------------фильтр по подрубрикам--------------->
     Выбор по подрубрикам:
@@ -24,7 +25,7 @@
 {% if advs_by_subrub|length > 0  %}
 {% for adv in advs_by_subrub %}
     <div class="adv-card">
-        <h2>{{ adv.title }}</h2>
+        <h2><a href="{% url 'adv' adv.id %}">{{ adv.title }}</a></h2>
         <p>{{ adv.content }}</p>
         <p>Подрубрика: {{ adv.subrubric }}</p>
         <p>{{ adv.published|date:'d.m.Y H:i:s' }}</p>

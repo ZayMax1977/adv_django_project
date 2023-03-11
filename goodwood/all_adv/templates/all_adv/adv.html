@@ -5,7 +5,8 @@
 <!--    -----------------фильтр по рубриккам-------------------->
      Выбор по рубрикам:
     {% for rubric in  rubrics %}
-        <a href="{% url 'by_rubric' rubric.pk %}">{{rubric.name}}.</a>
+        <a href="{{rubric.get_absolute_url}}">{{rubric.name}}.</a>
+
     {% endfor %}<br>
 <!--    ---------------------фильтр по подрубрикам--------------->
     Выбор по подрубрикам:
@@ -22,7 +23,7 @@
         <p>ID: {{ adv.id }}</p>
         <p>{{ adv.content }}</p>
 
-        <p><a href="{% url 'by_rubric' adv.rubric.pk %}">{{ adv.rubric.name }}. </a>{{ adv.subrubric }}</p>
+        <p><a href="{{adv.get_absolute_url}}">{{ adv.rubric.name }}. </a>{{ adv.subrubric }}</p>
 
 
 
