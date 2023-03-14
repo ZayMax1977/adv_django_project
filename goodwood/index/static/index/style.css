@@ -97,7 +97,6 @@ header a#pull {
 
 /* ------------------------------------------------------------ Блок контента------------- */
 main{
-    /* background-image: url(../img/bg-test.png); */
     display: grid;
     grid-template-columns: 3fr 2fr;
     grid-template-rows:  1fr 8fr;

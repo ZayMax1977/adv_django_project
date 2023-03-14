@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
-    <script src="{% static 'index/scripts/map-states.js' %}"></script>
+
 <!--    ---------------Стили базового шаблона------------------------------------------->
     <link rel="stylesheet" type="text/css" href="{% static 'index/style.css' %}">
 <!--    ---------------Стили контента(карточки объявления)------------------------------->
@@ -30,6 +30,7 @@
         </ul>
         <a href="#" id="pull">Меню</a>
     </header>
+
   <div class="block-popular">
 
                 <span class="popular-elem">Популярное в поиске:</span>
@@ -46,9 +47,117 @@
                 <a href="/">Челябинск </a><br>
             </div>
 
+<div class="main-screen">
+    <div class="filter-block">
+        <form>
+            Поиск по фильтрам:
+            <fieldset class="filter_line">
+            <legend>Общий фильтр</legend>
+                <div>
+                    Регион:
+                    <select id="selectRegion">
+                        <option value=”GR”>Green</option>
+                        <option value=”YE”>Yellow</option>
+                        <option value=”BL”>Black</option>
+                    </select>
+                </div>
+                <div>
+                    Город:
+                    <input type="text" name="filter_city" pattern="" >
+                </div>
+                <div>
+                    Вид сделки:
+                    <select id="transaction">
+                        <option value='Продам'>Продам</option>
+                        <option value='Куплю'>Куплю</option>
+                        <option value='Сдам/Отдам в наём'>Сдам/Отдам в наём</option>
+                        <option value='Сниму/Арендую'>Сниму/Арендую</option>
+                        <option value='Возьму даром'>Возьму даром</option>
+                        <option value='Отдам даром'>Отдам даром</option>
+                        <option value='Ищу работу'>Ищу работу</option>
+                        <option value='Предлагаю работу'>Предлагаю работу</option>
+                    </select>
+                </div>
+                <div>
+                    Поиск по тексту:
+                    <input type="text" name="filter_text" pattern="" >
+                </div>
+            </fieldset>
+            <fieldset class="filter_line">
+            <legend>Фильтр для недвижимости</legend>
 
-{% block content %}
-    {% endblock content %}
+                <div>
+                    Цена от:
+                    <input type="number" name="filter_price_min" pattern="" >
+                </div>
+                <div>
+                    Цена до:
+                    <input type="number" name="filter_price_max" pattern="" >
+                </div>
+                <div>
+                    Правовой статус объекта:
+                    <select id="law_status">
+                         <option value='Квартира'>Квартира</option>
+                        <option value='Домовладение'>Домовладение</option>
+                        <option value='Жилое помещение'>Жилое помещение</option>
+                        <option value='Апартаменты'>Апартаменты</option>
+                        <option value='ИЖС'>ИЖС</option>
+                        <option value='СНТ'>СНТ</option>
+                        <option value='ДНТ'>ДНТ</option>
+                        <option value='Земли сельского хозяйства'>Земли сельского хозяйства</option>
+                    </select>
+                </div>
+                <div>
+                    Рубрика:
+                    <select id="rubric">
+                         <option value='Недвижимость'>Недвижимость</option>
+                        <option value='Транспортные средства'>Транспортные средства</option>
+                        <option value='Досуг и хобби'>Досуг и хобби</option>
+                        <option value='Электроника'>Электроника</option>
+                        <option value='Хозяйство'>Хозяйство</option>
+                    </select>
+                </div>
+                <div class="main-subrubric">
+                    <label for="filter_subrubric">Подрубрика</label>
+                    <input type="text" name="filter_subrubric" id='filter_subrubric' value="" readonly>
+                    <img src="{% static 'all_adv/choose.png' %}" width="36" height="36" alt="Выбор подрубрики" id="show_hidden_button">
+
+                    <div hidden class="subrubric_hidden" id="subrubric_hidden" >
+                        Республики:
+                        <span>Адыгея</span>, <span>Алтай</span>, <span>Башкортостан</span>,
+<span>Бурятия</span>, <span>Дагестан</span>, <span>Донецкая народная</span>, <span>Ингушетия</span>,
+                        <span>Кабардино-Балкария</span>, <span>Калмыкия</span>,
+                    </div>
+
+                </div>
+
+            </fieldset>
+                <div>
+                    <input type="checkbox" id="word-of-mouth" name="source" value="word-of-mouth">
+                    <label for="word-of-mouth">Word of Mouth</label>
+              </div>
+              <div>
+                    <input type="checkbox" id="press" name="source" value="press">
+                    <label for="press">Press</label>
+              </div>
+              <div>
+                    <input type="checkbox" id="event" name="source" value="event">
+                    <label for="event">Event</label>
+              </div>
+              <div>
+                    <input type="checkbox" id="billboard" name="source" value="billboard">
+                    <label for="billboard">Billboard</label>
+              </div>
+              <div>
+                    <button type="submit">Submit form</button>
+              </div>
+
+        </form>
+    </div>
+    <div>{% block content %}{% endblock content %}</div>
+
+
+</div>
 
     <footer>
     <div class="up-footer">
@@ -84,4 +193,7 @@
 		});
 
 </script>
+    <script src="{% static 'index/scripts/map-states.js' %}"></script>
+    <script src="{% static 'all_adv/scripts.js' %}"></script>
+
 </body>
