@@ -9,24 +9,47 @@ class AdvForm(ModelForm):
         model = Adv
 
         fields = ['title',
-                  'rubric',
-                  'subrubric',
                   'transaction',
-                  'content',
                   'region',
                   'city',
+                  'district_city',
+                  'user_name',
+                  'phone_number',
+                  'content',
+                  'price',
+                  'rubric',
+                  'subrubric',
+
+
                   'street',
-                  'car_mark',
-                  'car_model',
-                  'car_year',
-                  'car_color',
                   'floors',
                   'floor',
                   'rooms',
                   'square_rooms',
                   'square_land',
-                  'user_name',
-                  'phone_number',
-                  'price']
+                  'law_status',
+                  'ower',
+
+                  'car_mark',
+                  'car_model',
+                  "car_year",
+                   'car_fuel',
+                  'car_color',
+                  "car_body",
+                  "car_actuator",
+                  "car_transmission",
+                  "car_run",
+                  "car_engine_capacity",
+
+                  "who",
+                  "whom",
+                  'your_age',
+                  "intention_age",
+                  "intention",
+
+                  "salary",
+                  "mode"
+
+                  ]
 
 

@@ -13,9 +13,12 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 
+from all_adv.views import pageNotFound
+from goodwood import settings
 from index.views import index
 
 urlpatterns = [
@@ -24,3 +27,9 @@ urlpatterns = [
     path('all_adv/', include('all_adv.urls')),
 
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL,
+                          document_root=settings.MEDIA_ROOT)
+
+handler404 = pageNotFound

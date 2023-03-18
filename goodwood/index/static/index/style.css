@@ -72,10 +72,13 @@ header a:hover, nav a:active {
     background: linear-gradient(to top, #93ade4, #C7D3EF);
     color:#15FC0A;
 }
+.selected{
+     background: linear-gradient(to top, #93ade4, #C7D3EF);
+    color:#15FC0A;
+}
 header a#pull {
     display: none;
 }
-
 /* --------------------------------------------------------------------Блок популярное-------------------- */
 .block-popular{
     text-align: center;

@@ -8,10 +8,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
 
+    <link rel="shortcut icon" href="{% static 'all_adv/images/gw.ico' %}" type="image/x-icon"/>
 <!--    ---------------Стили базового шаблона------------------------------------------->
     <link rel="stylesheet" type="text/css" href="{% static 'index/style.css' %}">
 <!--    ---------------Стили контента(карточки объявления)------------------------------->
-    <link rel="stylesheet" type="text/css" href="{% static 'all_adv/style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'all_adv/css/style.css' %}">
 
     <title>GoodWood</title>
 
@@ -21,12 +22,15 @@
         <img src="{% static 'index/gw.png' %}" width="40" height="40" alt="logo">
         <div class="logo-text">GoodWood</div>
         <ul class="clearfix">
-            <li><a href="{% url  'index' %}">Главная</a></li>
-            <li><a href="{% url  'all_advs' %}">Объявления</a></li>
-            <li><a href="{% url  'add' %}">Подать</a></li>
-            <li><a href="#">Интересно</a></li>
-            <li><a href="#">Контакты</a></li>
-            <li><a href="#">Регистрация</a></li>
+            {% for m in menu %}
+            {% if m.page_url == page %}
+            <li ><a class="selected" href="{% url  m.page_url %}">{{ m.title }}</a></li>
+            {% else %}
+                <li ><a  href="{% url  m.page_url %}">{{ m.title }}</a></li>
+            {% endif %}
+
+
+            {% endfor %}
         </ul>
         <a href="#" id="pull">Меню</a>
     </header>
@@ -49,25 +53,227 @@
 
 <div class="main-screen">
     <div class="filter-block">
-        <form>
+        <form method="GET" action='{% url "find_by_filter" %}'>
+
             Поиск по фильтрам:
+<!-- --------------------------ОБЩИЙ ФИЛЬТР (РЕГИОН)-------------------------------------------->
             <fieldset class="filter_line">
             <legend>Общий фильтр</legend>
+               <div>
+                   <label for="list_states">Регион:</label>
+                   <select name="region" id="list_states">
+                       <option value="">Все субъекты...</option>
+                         <optgroup label="Республики">
+                            <option value="Адыгея">Адыгея</option>
+                            <option value="Алтай">Алтай</option>
+                            <option value="Башкортостан">Башкортостан</option>
+                             <option value="Бурятия">Бурятия</option>
+                            <option value="Дагестан">Дагестан</option>
+                            <option value="Донецкая народная">Донецкая народная</option>
+                            <option value="Ингушетия">Ингушетия</option>
+                            <option value="Кабардино-Балкария">Кабардино-Балкария</option>
+                             <option value="Калмыкия">Калмыкия</option>
+                             <option value="Карачаево-Черкессия">Карачаево-Черкессия</option>
+                             <option value="Карелия">Карелия</option>
+                             <option value="Коми">Коми</option>
+                             <option value="Крым">Крым</option>
+                             <option value="Луганская народная">Луганская народная</option>
+                             <option value="Марий Эл">Марий Эл</option>
+                             <option value="Мордовия">Мордовия</option>
+                             <option value="Якутия">Якутия</option>
+                             <option value="Северная Осетия">Северная Осетия</option>
+                             <option value="Татарстан">Татарстан</option>
+                             <option value="Тыва">Тыва</option>
+                             <option value="Удмуртия">Удмуртия</option>
+                             <option value="Хакасия">Хакасия</option>
+                             <option value="Чечня">Чечня</option>
+                             <option value="Чувашия">Чувашия</option>
+                         </optgroup>
+                       <optgroup label="Края">
+                            <option value="Алтайский">Алтайский</option>
+                            <option value="Забайкальский">Забайкальский</option>
+                           <option value="Камчатский">Камчатский</option>
+                           <option value="Краснодарский">Краснодарский</option>
+                           <option value="Красноярский">Красноярский</option>
+                           <option value="Пермский">Пермский</option>
+                           <option value="Приморский">Приморский</option>
+                           <option value="Ставропольский">Ставропольский</option>
+                           <option value="Хабаровский">Хабаровский</option>
+                       </optgroup>
+                        <optgroup label="Области">
+                            <option value="Архангельская">Архангельская</option>
+                            <option value="Амурская">Амурская</option>
+                           <option value="Астраханская">Астраханская</option>
+                           <option value="Белгородская">Белгородская</option>
+                           <option value="Брянская">Брянская</option>
+                           <option value="Владимирская">Владимирская</option>
+                           <option value="Волгоградская">Волгоградская</option>
+                           <option value="Вологодская">Вологодская</option>
+                           <option value="Воронежская">Воронежская</option>
+                            <option value="Запорожская">Запорожская</option>
+                            <option value="Ивановская">Ивановская</option>
+                           <option value="Иркутская">Иркутская</option>
+                           <option value="Калининградская">Калининградская</option>
+                           <option value="Калужская">Калужская</option>
+                           <option value="Кемеровская">Кемеровская</option>
+                           <option value="Кировская">Кировская</option>
+                           <option value="Костромская">Костромская</option>
+                           <option value="Курганская">Курганская</option>
+                            <option value="Курская">Курская</option>
+                            <option value="Ленинградская">Ленинградская</option>
+                           <option value="Липецкая">Липецкая</option>
+                           <option value="Магаданская">Магаданская</option>
+                           <option value="Московская">Московская</option>
+                           <option value="Мурманская">Мурманская</option>
+                           <option value="Нижегородская">Нижегородская</option>
+                           <option value="Новгородская">Новгородская</option>
+                           <option value="Новосибирская">Новосибирская</option>
+                            <option value="Омская">Омская</option>
+                            <option value="Оренбургская">Оренбургская</option>
+                           <option value="Орловская">Орловская</option>
+                           <option value="Пензенская">Пензенская</option>
+                           <option value="Псковская">Псковская</option>
+                           <option value="Ростовская">Ростовская</option>
+                           <option value="Рязанская">Рязанская</option>
+                           <option value="Самарская">Самарская</option>
+                           <option value="Саратовская">Саратовская</option>
+                            <option value="Сахалинская">Сахалинская</option>
+                            <option value="Свердловская">Свердловская</option>
+                           <option value="Смоленская">Смоленская</option>
+                           <option value="Тамбовская">Тамбовская</option>
+                           <option value="Тверская">Тверская</option>
+                           <option value="Томская">Томская</option>
+                           <option value="Тульская">Тульская</option>
+                           <option value="Тюменская">Тюменская</option>
+                           <option value="Ульяновская">Ульяновская</option>
+                            <option value="Херсонская">Херсонская</option>
+                           <option value="Челябинская">Челябинская</option>
+                           <option value="Ярославская">Ярославская</option>
+                       </optgroup>
+                       <optgroup label="Города">
+                            <option value="Москва">Москва</option>
+                            <option value="Санкт-Петербург">Санкт-Петербург</option>
+                           <option value="Севастополь">Севастополь</option>
+                       </optgroup>
+                       <optgroup label="Автономии">
+                            <option value="Еврейская">Еврейская</option>
+                            <option value="Ненецкий">Ненецкий</option>
+                           <option value="Ханты-Мансийский">Ханты-Мансийский</option>
+                           <option value="Чукотский">Чукотский</option>
+                           <option value="Чукотский">Ямало-Ненецкий</option>
+
+                       </optgroup>
+                   </select>
+               </div>
+<!-- --------------------------ОБЩИЙ ФИЛЬТР (ГОРОД)-------------------------------------------->
                 <div>
-                    Регион:
-                    <select id="selectRegion">
-                        <option value=”GR”>Green</option>
-                        <option value=”YE”>Yellow</option>
-                        <option value=”BL”>Black</option>
+                    <label for="filter_city">Город:</label>
+                    <input type="text" name="filter_city" id="filter_city" >
+                </div>
+                <div>
+<!-- --------------------------ОБЩИЙ ФИЛЬТР (РУБРИКА)------------------------------------------>
+                <div>
+                    <label for="list_rubric">Рубрика:</label>
+
+                    <select id="list_rubric" name="list_rubric">
+                        <option value=''>--Выбор рубрики--</option>
+
+                         <option value='Недвижимость'>Недвижимость</option>
+                        <option value='Транспортные средства'>Транспортные средства</option>
+                        <option value='Досуг и хобби'>Досуг и хобби</option>
+                        <option value='Электроника'>Электроника</option>
+                        <option value='Хозяйство'>Хозяйство</option>
                     </select>
                 </div>
+<!-- --------------------------ОБЩИЙ ФИЛЬТР (ПОДРУБРИКА)--------------------------------------->
                 <div>
-                    Город:
-                    <input type="text" name="filter_city" pattern="" >
+                   <label for="list_subrubric">Подрубрика:</label>
+                   <select name="list_subrubric" id="list_subrubric">
+
+                         <optgroup label="Транспортные средства">
+                             <option value="">--Выбор подрубрики--</option>
+                            <option value="Автомобили">Автомобили</option>
+                            <option value="Автомобильные запчасти">Автомобильные запчасти</option>
+                            <option value="Водный транспорт и запчасти">Водный транспорт и запчасти</option>
+                             <option value="Прицепы и дома">Прицепы и дома</option>
+                            <option value="Мотоциклы, малая техника и запчасти">Мотоциклы, малая техника и запчасти</option>
+                            <option value="Воздушные транспортные средства и запчасти">Воздушные транспортные средства и запчасти</option>
+                            <option value="Другие транспортные средства">Другие транспортные средства</option>
+                         </optgroup>
+                       <optgroup label="Электроника">
+                            <option value="Компьютеры и комплектующие">Компьютеры и комплектующие</option>
+                             <option value="Оргтехника">Оргтехника</option>
+                             <option value="Фото и видео">Фото и видео</option>
+                             <option value="Телефоны и планшеты">Телефоны и планшеты</option>
+                             <option value="Телевизоры и ТВ-приставки">Телевизоры и ТВ-приставки</option>
+                             <option value="Другая электроника">Другая электроника</option>
+                       </optgroup>
+                       <optgroup label="Недвижимость">
+                             <option value="Квартиры">Квартиры</option>
+                             <option value="Дома">Дома</option>
+                             <option value="Комнаты">Комнаты</option>
+                             <option value="Участки">Участки</option>
+                             <option value="Коммерческая">Коммерческая</option>
+                       </optgroup>
+                       <optgroup label="Хозяйство">
+                             <option value="Искусство и антиквариат">Искусство и антиквариат</option>
+                             <option value="Детские товары и игрушки">Детские товары и игрушки</option>
+                             <option value="Одежда">Одежда</option>
+                             <option value="Сад и огород">Сад и огород</option>
+                             <option value="Инструмент">Инструмент</option>
+                             <option value="Мебель">Мебель</option>
+                            <option value="Домашний декор">Домашний декор</option>
+                             <option value="Бытовая техника">Бытовая техника</option>
+                       </optgroup>
+                       <optgroup label="Досуг и хобби">
+                             <option value="Журналы, книги и издания">Журналы, книги и издания</option>
+                             <option value="Животные">Животные</option>
+                             <option value='Хобби'>Хобби</option>
+                        <option value='Знакомства'>Знакомства</option>
+                        <option value='Охота и рыбалка'>Охота и рыбалка</option>
+                        <option value='Часы и ювелирные изделия'>Часы и ювелирные изделия</option>
+                        <option value='Музыкальные инструменты'>Музыкальные инструменты</option>
+                           <option value="Спорт">Спорт</option>
+                       </optgroup>
+                       <optgroup label="Работа">
+                             <option value='Бухгалтерский учет и аудит'>Бухгалтерский учет и аудит</option>
+                           <option value="IT, администрирование и поддержка">IT, администрирование и поддержка</option>
+                            <option value="Реклама и маркетинг">Реклама и маркетинг</option>
+                            <option value="Искусство и развлечение">Искусство и развлечение</option>
+                             <option value="Автомобилестроение и механика">Автомобилестроение и механика</option>
+                            <option value="Уход за детьми">Уход за детьми</option>
+                            <option value="Обслуживание">Обслуживание</option>
+                            <option value="Здравоохранение">Здравоохранение</option>
+                            <option value="Гостиничный бизнес и туризм">Гостиничный бизнес и туризм</option>
+                             <option value="Мода и красот">Мода и красот</option>
+                             <option value="Графический дизайн и САПР">Графический дизайн и САПР</option>
+                             <option value="Управление персоналом">Управление персоналом</option>
+                             <option value="Установка и техническое обслуживание">Установка и техническое обслуживание</option>
+                             <option value="Интернет и электронная коммерция">Интернет и электронная коммерция</option>
+                             <option value="Правоохранительные органы, гос.управление">Правоохранительные органы, гос.управление</option>
+                             <option value="Производство">Производство</option>
+                             <option value="Менеджмент и управление">Менеджмент и управление</option>
+                             <option value="Строительство">Строительство</option>
+
+                             <option value="Горнодобывающая промышленность">Горнодобывающая промышленность</option>
+                            <option value="Издательское дело, журналистика и СМИ">Издательское дело, журналистика и СМИ</option>
+                            <option value="акупки и мерчендайзинг">акупки и мерчендайзинг</option>
+                             <option value="Рестораны и общественное питание">Рестораны и общественное питание</option>
+                            <option value="Розничная и оптовая торговля">Розничная и оптовая торговля</option>
+                            <option value="Транспортные и складские услуги">Транспортные и складские услуги</option>
+                            <option value="Ветеринарные услуги">Ветеринарные услуги</option>
+                            <option value="Работа на дому">Работа на дому</option>
+
+                         </optgroup>
+
+                   </select>
                 </div>
-                <div>
-                    Вид сделки:
-                    <select id="transaction">
+
+<!-- --------------------------ОБЩИЙ ФИЛЬТР (ВИД СДЕЛКИ)-------------------------------------------->
+                     <label for="transaction">Вид сделки:</label>
+                    <select id="transaction" name="transaction">
+                        <option value=''>--Вид сделки--</option>
+
                         <option value='Продам'>Продам</option>
                         <option value='Куплю'>Куплю</option>
                         <option value='Сдам/Отдам в наём'>Сдам/Отдам в наём</option>
@@ -78,25 +284,40 @@
                         <option value='Предлагаю работу'>Предлагаю работу</option>
                     </select>
                 </div>
+
+<!-- --------------------------ОБЩИЙ ФИЛЬТР (ПОИСК ПО ТЕКСТУ)------------------------------------------->
                 <div>
-                    Поиск по тексту:
-                    <input type="text" name="filter_text" pattern="" >
+                    <label for="filter_text">Поиск по тексту</label>
+                    <input type="text" name="filter_text"  id="filter_text">
                 </div>
-            </fieldset>
-            <fieldset class="filter_line">
-            <legend>Фильтр для недвижимости</legend>
+<!-- --------------------------ОБЩИЙ ФИЛЬТР (ПОИСК ПО цене)----------------------------------->
 
                 <div>
-                    Цена от:
-                    <input type="number" name="filter_price_min" pattern="" >
+                     <label for="filter_price">Поиск по цене:</label>
+                    <input type="text" name="filter_price" id="filter_price"  >
                 </div>
+
+            </fieldset>
+<!-- --------------------------ФИЛЬТР ПО НЕДВИЖИМОСТИ--------------------------------------->
+
+            <fieldset class="filter_line">
+            <legend>Фильтр для недвижимости</legend>
+<!------------------------------ФИЛЬТР ПО НЕДВИЖИМОСТИ(Цена от)------------------------------>
                 <div>
-                    Цена до:
-                    <input type="number" name="filter_price_max" pattern="" >
+                    <label for="filter_price_min">Цена от:</label>
+                    <input type="text" name="filter_price_min" id="filter_price_min" >
                 </div>
+<!------------------------------ФИЛЬТР ПО НЕДВИЖИМОСТИ(Цена до)------------------------------>
                 <div>
-                    Правовой статус объекта:
-                    <select id="law_status">
+                    <label for="filter_price_max">Цена до:</label>
+                    <input type="text" name="filter_price_max" id="filter_price_max" >
+                </div>
+<!------------------------------ФИЛЬТР ПО НЕДВИЖИМОСТИ(Правовой статус объекта)--------------->
+
+                <div>
+                    <label for="law_status"> Правовой статус объекта:</label>
+                    <select id="law_status" name="law_status">
+                        <option value=''>--Выбор объекта--</option>
                          <option value='Квартира'>Квартира</option>
                         <option value='Домовладение'>Домовладение</option>
                         <option value='Жилое помещение'>Жилое помещение</option>
@@ -107,51 +328,647 @@
                         <option value='Земли сельского хозяйства'>Земли сельского хозяйства</option>
                     </select>
                 </div>
+<!------------------------------ФИЛЬТР ПО НЕДВИЖИМОСТИ(Субъект)----------------------->
+
                 <div>
-                    Рубрика:
-                    <select id="rubric">
-                         <option value='Недвижимость'>Недвижимость</option>
-                        <option value='Транспортные средства'>Транспортные средства</option>
-                        <option value='Досуг и хобби'>Досуг и хобби</option>
-                        <option value='Электроника'>Электроника</option>
-                        <option value='Хозяйство'>Хозяйство</option>
+                    <label for="ower">Субъект:</label>
+                    <select id="ower" name="ower">
+                        <option value=''>--Выбор субъекта--</option>
+
+                         <option value='Собственник'>Собственник</option>
+                        <option value='Агентство'>Агентство</option>
                     </select>
                 </div>
-                <div class="main-subrubric">
-                    <label for="filter_subrubric">Подрубрика</label>
-                    <input type="text" name="filter_subrubric" id='filter_subrubric' value="" readonly>
-                    <img src="{% static 'all_adv/choose.png' %}" width="36" height="36" alt="Выбор подрубрики" id="show_hidden_button">
+<!------------------------------ФИЛЬТР ПО НЕДВИЖИМОСТИ(Улица)----------------------->
+                <div>
+                    <label for="street">Улица:</label>
+                    <input type="text" name="street" id="street">
+                </div>
+<!------------------------------ФИЛЬТР ПО НЕДВИЖИМОСТИ(Общая площадь)----------------------->
 
-                    <div hidden class="subrubric_hidden" id="subrubric_hidden" >
-                        Республики:
-                        <span>Адыгея</span>, <span>Алтай</span>, <span>Башкортостан</span>,
-<span>Бурятия</span>, <span>Дагестан</span>, <span>Донецкая народная</span>, <span>Ингушетия</span>,
-                        <span>Кабардино-Балкария</span>, <span>Калмыкия</span>,
-                    </div>
+                <div>
+                     <label for="all_square_rooms">Общая площадь:</label>
+                    <input type="number" name="all_square_rooms" id="all_square_rooms" >
+                </div>
+<!------------------------------ФИЛЬТР ПО НЕДВИЖИМОСТИ(Количество этажей)----------------------->
 
+                <div>
+                    <label for="floors">Количество этажей:</label>
+                    <input type="text" name="floors"  id="floors">
+                </div>
+<!------------------------------ФИЛЬТР ПО НЕДВИЖИМОСТИ(Этаж)----------------------->
+
+                <div>
+                    <label for="floor">Этаж:</label>
+                    <input type="text" name="floor"  id="floor">
+                </div>
+<!------------------------------ФИЛЬТР ПО НЕДВИЖИМОСТИ(Количество комнат)----------------------->
+
+                <div>
+                     <label for="rooms">Количество комнат:</label>
+                    <input type="text" name="rooms"  id="rooms">
+                </div>
+<!------------------------------ФИЛЬТР ПО НЕДВИЖИМОСТИ(Площадь земли)----------------------->
+
+                <div>
+                    <label for="land_square">Площадь земли:</label>
+                    <input type="number" name="land_square"  id="land_square">
                 </div>
 
             </fieldset>
-                <div>
-                    <input type="checkbox" id="word-of-mouth" name="source" value="word-of-mouth">
-                    <label for="word-of-mouth">Word of Mouth</label>
-              </div>
-              <div>
-                    <input type="checkbox" id="press" name="source" value="press">
-                    <label for="press">Press</label>
-              </div>
-              <div>
-                    <input type="checkbox" id="event" name="source" value="event">
-                    <label for="event">Event</label>
-              </div>
-              <div>
-                    <input type="checkbox" id="billboard" name="source" value="billboard">
-                    <label for="billboard">Billboard</label>
-              </div>
-              <div>
-                    <button type="submit">Submit form</button>
-              </div>
+<!------------------------------ФИЛЬТР ПО АВТО-------------------------------->
+             <fieldset class="filter_line">
+            <legend>Фильтр по авто</legend>
 
+<!------------------------------ФИЛЬТР ПО АВТО(МАРКА)-------------------------------->
+               <div>
+                   <label for="car_mark">Марки:</label>
+                   <select name="car_mark" id="car_mark" >
+                       <option value="">Любая</option>
+                       <optgroup label="США">
+                            <option value="AMC">AMC</option>
+                            <option value="Abbott-Detroit">Abbott-Detroit</option>
+                            <option value="Atlanta Motors">Atlanta Motors</option>
+                             <option value="Auburn">Auburn</option>
+                            <option value="Brammo">Brammo</option>
+                            <option value="Buick">Buick</option>
+                            <option value="Cadillac">Cadillac</option>
+                            <option value="Chevrolet">Chevrolet</option>
+                             <option value="Chrysler">Chrysler</option>
+                             <option value="Cizeta">Cizeta</option>
+                             <option value="Cole">Cole</option>
+                             <option value="Corvette">Corvette</option>
+                             <option value="Detroit Electric">Detroit Electric</option>
+                             <option value="Dodge">Dodge</option>
+                             <option value="Eagle">Eagle</option>
+                             <option value="Edsel">Edsel</option>
+                             <option value="Faraday Future">Faraday Future</option>
+                             <option value="Ford">Ford</option>
+                             <option value="Franklin">Franklin</option>
+                             <option value="Freightliner">Freightliner</option>
+                             <option value="GM">GM</option>
+                             <option value="GMC">GMC</option>
+                             <option value="Geo">Geo</option>
+                             <option value="Hennessey">Hennessey</option>
+                             <option value="Hudson">Hudson</option>
+                             <option value="Hummer">Hummer</option>
+                             <option value="Hupmobile">Hupmobile</option>
+                             <option value="Jeep">Jeep</option>
+                             <option value="Lincoln">Lincoln</option>
+                             <option value="Lucid">Lucid</option>
+                             <option value="Mack">Mack</option>
+                             <option value="Mercury">Mercury</option>
+                             <option value="Merkur">Merkur</option>
+                             <option value="Mosler">Mosler</option>
+                             <option value="Mustang">Mustang</option>
+                             <option value="Navistar">Navistar</option>
+                             <option value="Oldsmobile">Oldsmobile</option>
+                             <option value="Olympian">Olympian</option>
+                             <option value="Paccar">Paccar</option>
+                             <option value="Panoz">Panoz</option>
+                             <option value="Peterbilt">Peterbilt</option>
+                             <option value="Plymouth">Plymouth</option>
+                             <option value="Pontiac">Pontiac</option>
+                             <option value="RAM">RAM</option>
+                             <option value="Rambler">Rambler</option>
+                             <option value="Rezvani">Rezvani</option>
+                             <option value="SRT">SRT</option>
+                             <option value="SSC">SSC</option>
+                             <option value="Saleen">Saleen</option>
+                             <option value="Saturn">Saturn</option>
+                             <option value="Shelby">Shelby</option>
+                             <option value="Singer">Singer</option>
+                             <option value="Sterling">Sterling</option>
+                             <option value="Studebaker">Studebaker</option>
+                             <option value="Tesla">Tesla</option>
+                             <option value="Trion">Trion</option>
+                             <option value="Vector">Vector</option>
+                             <option value="Viper">Viper</option>
+                             <option value="Western Star">Western Star</option>
+                             <option value="Willys">Willys</option>
+                             <option value="Workhorse">Workhorse</option>
+                         </optgroup>
+                       <optgroup label="Австралия">
+                           <option value="Elfin">Elfin</option>
+                            <option value="FPV">FPV</option>
+                            <option value="HSV">HSV</option>
+                            <option value="Holden">Holden</option>
+
+                       </optgroup>
+                       <optgroup label="Австрия">
+                           <option value="Fisker">Fisker</option>
+                            <option value="Force Motors">Force Motors</option>
+                            <option value="Rosenbauer">Rosenbauer</option>
+
+                       </optgroup>
+                       <optgroup label="Бельгия">
+                            <option value="Abadal">Abadal</option>
+                            <option value="Gillet">Gillet</option>
+                       </optgroup>
+                       <optgroup label="Бразилия">
+                           <option value="Agrale">Agrale</option>
+                            <option value="Lobini">Lobini</option>
+                           <option value="Troller">Troller</option>
+                       </optgroup>
+                       <optgroup label="Великобритания">
+                           <option value="AC Cars">AC Cars</option>
+                            <option value="Alvis">Alvis</option>
+                           <option value="Arash">Arash</option>
+                             <option value="Ariel">Ariel</option>
+                            <option value="Arrival">Arrival</option>
+                           <option value="Ascari">Ascari</option>
+                             <option value="Aston Martin">Aston Martin</option>
+                            <option value="Austin">Austin</option>
+                           <option value="Axon">Axon</option>
+                             <option value="BAC">BAC</option>
+                            <option value="Bentley">Bentley</option>
+                           <option value="Berkeley">Berkeley</option>
+                             <option value="Bowler">Bowler</option>
+                           <option value="Bristol Cars">Bristol Cars</option>
+                             <option value="Brooke Cars">Brooke Cars</option>
+                            <option value="Caparo">Caparo</option>
+                           <option value="Caterham">Caterham</option>
+                             <option value="Foden Trucks">Foden Trucks</option>
+                           <option value="Gilbern">Gilbern</option>
+                             <option value="Ginetta">Ginetta</option>
+                            <option value="Grinnall">Grinnall</option>
+                           <option value="Hillman">Hillman</option>
+                             <option value="JBA">JBA</option>
+                           <option value="Jaguar">Jaguar</option>
+                             <option value="Jensen">Jensen</option>
+                            <option value="LEVC">LEVC</option>
+                           <option value="Lagonda">Lagonda</option>
+                             <option value="Land Rover">Land Rover</option>
+                           <option value="Leyland">Leyland</option>
+                             <option value="Lister">Lister</option>
+                            <option value="Lotus">Lotus</option>
+                           <option value="MG">MG</option>
+                             <option value="Marcos">Marcos</option>
+                           <option value="Marlin">Marlin</option>
+                             <option value="Maxus">Maxus</option>
+                            <option value="McLaren">McLaren</option>
+                           <option value="Mini">Mini</option>
+                             <option value="Morgan">Morgan</option>
+                           <option value="Morris">Morris</option>
+                             <option value="Noble">Noble</option>
+                            <option value="Prodrive">Prodrive</option>
+                           <option value="Radical">Radical</option>
+                             <option value="Riley">Riley</option>
+                           <option value="Rolls-Royce">Rolls-Royce</option>
+                             <option value="Ronart">Ronart</option>
+                            <option value="Rover">Rover</option>
+                           <option value="Suffolk">Suffolk</option>
+                             <option value="TVR">TVR</option>
+                           <option value="Talbot">Talbot</option>
+                             <option value="Triumph">Triumph</option>
+                            <option value="Ultima">Ultima</option>
+                           <option value="Vauxhall">Vauxhall</option>
+                           <option value="Westfield">Westfield</option>
+
+
+
+
+
+
+
+
+
+
+
+
+                       </optgroup>
+                        <optgroup label="Германия">
+                           <option value="ABT">ABT</option>
+                            <option value="AMG">AMG</option>
+                           <option value="Alpina">Alpina</option>
+                            <option value="Apollo">Apollo</option>
+                            <option value="Artega">Artega</option>
+                           <option value="Audi">Audi</option>
+                           <option value="Audi Sport">Audi Sport</option>
+                            <option value="BMW">BMW</option>
+                           <option value="BMW M">BMW M</option>
+                            <option value="BharatBenz">BharatBenz</option>
+                            <option value="Borgward">Borgward</option>
+                           <option value="Brabus">Brabus</option>
+                            <option value="DKW">DKW</option>
+                            <option value="Daimler">Daimler</option>
+                           <option value="EDAG">EDAG</option>
+                            <option value="Gumpert">Gumpert</option>
+                            <option value="Horch">Horch</option>
+                           <option value="Lloyd">Lloyd</option>
+                            <option value="MAN">MAN</option>
+                            <option value="Mansory">Mansory</option>
+                           <option value="Maybach">Maybach</option>
+                            <option value="Melkus">Melkus</option>
+                            <option value="Mercedes">Mercedes</option>
+                           <option value="Opel">Opel</option>
+                            <option value="Porsche">Porsche</option>
+                            <option value="Ruf">Ruf</option>
+                           <option value="Setra">Setra</option>
+                            <option value="TechArt">TechArt</option>
+                            <option value="Volkswagen">Volkswagen</option>
+                           <option value="Wanderer">Wanderer</option>
+                            <option value="Wartburg">Wartburg</option>
+                           <option value="Wiesmann">Wiesmann</option>
+                       </optgroup>
+                       <optgroup label="Греция">
+                           <option value="Alta">Alta</option>
+                       </optgroup>
+                        <optgroup label="Испания">
+                           <option value="GTA Motor">GTA Motor</option>
+                            <option value="Hispano-Suiza">Hispano-Suiza</option>
+                           <option value="Pegaso">Pegaso</option>
+                            <option value="SEAT">SEAT</option>
+                            <option value="Tauro">Tauro</option>
+                           <option value="Tramontana">Tramontana</option>
+                       </optgroup>
+                       <optgroup label="Италия">
+                           <option value="Abarth">Abarth</option>
+                            <option value="Alfa Romeo">Alfa Romeo</option>
+                           <option value="Autobianchi">Autobianchi</option>
+                            <option value="Bertone">Bertone</option>
+                            <option value="Bizzarrini">Bizzarrini</option>
+                           <option value="Cisitalia">Cisitalia</option>
+                           <option value="De Tomaso">De Tomaso</option>
+                            <option value="Diatto">Diatto</option>
+                           <option value="Ferrari">Ferrari</option>
+                            <option value="Fiat">Fiat</option>
+                            <option value="Fioravanti">Fioravanti</option>
+                           <option value="Lamborghini">Lamborghini</option>
+                            <option value="Lancia">Lancia</option>
+                           <option value="Maserati">Maserati</option>
+                            <option value="Mazzanti">Mazzanti</option>
+                           <option value="OSCA">OSCA</option>
+                            <option value="Pagani">Pagani</option>
+                            <option value="Pininfarina">Pininfarina</option>
+
+                       </optgroup>
+                        <optgroup label="Ирландия">
+                           <option value="DeLorean">DeLorean</option>
+                        </optgroup>
+                       <optgroup label="Индия">
+                           <option value="Eicher">Eicher</option>
+                            <option value="Hindustan">Hindustan</option>
+                           <option value="Mahindra">Mahindra</option>
+                            <option value="Premier">Premier</option>
+                            <option value="Tata">Tata</option>
+                       </optgroup>
+                       <optgroup label="Иран">
+                           <option value="SAIPA">SAIPA</option>
+                       </optgroup>
+                       <optgroup label="Китай">
+                           <option value="Aiways">Aiways</option>
+                            <option value="Arcfox">Arcfox</option>
+                           <option value="BAIC Motor">BAIC Motor</option>
+                            <option value="BYD">BYD</option>
+                            <option value="Baojun">Baojun</option>
+                           <option value="Brilliance">Brilliance</option>
+                           <option value="Carlsson">Carlsson</option>
+                            <option value="Changan">Changan</option>
+                           <option value="Changfen">Changfen</option>
+                            <option value="Chery">Chery</option>
+                            <option value="DS">DS</option>
+                           <option value="Dongfeng">Dongfeng</option>
+                            <option value="Englon">Englon</option>
+                           <option value="FAW">FAW</option>
+                            <option value="Foton">Foton</option>
+                           <option value="GAC">GAC</option>
+                            <option value="Geely">Geely</option>
+                            <option value="Gonow">Gonow</option>
+                           <option value="Great Wall">Great Wall</option>
+                            <option value="Hafei">Hafei</option>
+                           <option value="Haima">Haima</option>
+                            <option value="Haval">Haval</option>
+                            <option value="Hawtai">Hawtai</option>
+                           <option value="JAC">JAC</option>
+                            <option value="JMC">JMC</option>
+                           <option value="Landwind">Landwind</option>
+                            <option value="Lifan">Lifan</option>
+                           <option value="Qoros">Qoros</option>
+                            <option value="Ranz">Ranz</option>
+                            <option value="Roewe">Roewe</option>
+                           <option value="SAIC Motor">SAIC Motor</option>
+                            <option value="TANK">TANK</option>
+                           <option value="Venucia">Venucia</option>
+                            <option value="Vortex">Vortex</option>
+                            <option value="Wuling">Wuling</option>
+                           <option value="XPeng">XPeng</option>
+                            <option value="Yutong">Yutong</option>
+
+                       </optgroup>
+                       <optgroup label="Корея">
+                           <option value="Daewoo">Daewoo</option>
+                            <option value="Genesis">Genesis</option>
+                           <option value="Hyundai">Hyundai</option>
+                            <option value="KIA">KIA</option>
+                            <option value="Samsung">Samsung</option>
+                           <option value="Spirra">Spirra</option>
+                           <option value="SsangYong">SsangYong</option>
+                       </optgroup>
+                       <optgroup label="Латвия">
+                           <option value="Baltijas Dzips">Baltijas Dzips</option>
+                            <option value="Dartz">Dartz</option>
+                           <option value="Drive eO">Drive eO</option>
+                       </optgroup>
+                       <optgroup label="Малазия">
+                           <option value="Bufori">Bufori</option>
+                           <option value="Proton">Proton</option>
+                           <option value="Perodua">Perodua</option>
+
+
+                       </optgroup>
+                       <optgroup label="Мексика">
+                           <option value="DINA">DINA</option>
+                            <option value="Mastretta">Mastretta</option>
+                       </optgroup>
+                       <optgroup label="Марокко">
+                           <option value="Laraki">Laraki</option>
+                       </optgroup>
+                       <optgroup label="Нидерланды">
+                           <option value="DAF">DAF</option>
+                            <option value="Donkervoort">Donkervoort</option>
+                           <option value="Spyker">Spyker</option>
+                            <option value="Vandenbrink">Vandenbrink</option>
+                            <option value="Vencer">Vencer</option>
+                       </optgroup>
+                        <optgroup label="ОАЭ">
+                           <option value="Devel">Devel</option>
+                            <option value="W Motors">W Motors</option>
+                        </optgroup>
+                        <optgroup label="Нидерланды">
+                           <option value="DAF">DAF</option>
+                            <option value="Donkervoort">Donkervoort</option>
+                           <option value="Spyker">Spyker</option>
+                            <option value="Vandenbrink">Vandenbrink</option>
+                            <option value="Vencer">Vencer</option>
+                       </optgroup>
+                       <optgroup label="Польша">
+                           <option value="Arrinera">Arrinera</option>
+                        </optgroup>
+                       <optgroup label="Россия">
+                           <option value="Aurus">Aurus</option>
+                            <option value="BAZ">BAZ</option>
+                           <option value="Bronto">Bronto</option>
+                            <option value="GAZ">GAZ</option>
+                            <option value="Lada">Lada</option>
+                           <option value="MAZ">MAZ</option>
+                           <option value="Moskvich">Moskvich</option>
+                            <option value="Pierce-Arrow">Pierce-Arrow</option>
+                            <option value="UAZ">UAZ</option>
+                       </optgroup>
+
+                       <optgroup label="Румыния">
+                           <option value="ARO">ARO</option>
+                            <option value="Dacia">Dacia</option>
+                           <option value="Oltcit">Oltcit</option>
+                       </optgroup>
+
+                       <optgroup label="Турция">
+                           <option value="Askam">Askam</option>
+                       </optgroup>
+
+                       <optgroup label="Тайвань">
+                           <option value="Luxgen">Luxgen</option>
+                            <option value="Soueast">Soueast</option>
+                           <option value="Yulon">Yulon</option>
+                       </optgroup>
+
+                       <optgroup label="Тайланд">
+                           <option value="Thai Run">Thai Run</option>
+                       </optgroup>
+
+                       <optgroup label="Финляндия">
+                           <option value="Sisu">Sisu</option>
+                           <option value="Toroidion">Toroidion</option>
+                       </optgroup>
+
+                        <optgroup label="Франция">
+                           <option value="Aixam">Aixam</option>
+                           <option value="Alpine">Alpine</option>
+                            <option value="Berliet">Berliet</option>
+                           <option value="Bugatti">Bugatti</option>
+                            <option value="Citroen">Citroen</option>
+                           <option value="Corre Licorne">Corre Licorne</option>
+                            <option value="Delage">Delage</option>
+                           <option value="Facel Vega">Facel Vega</option>
+                            <option value="Hommell">Hommell</option>
+                           <option value="Ligier">Ligier</option>
+                            <option value="Microcar">Microcar</option>
+                           <option value="PGO">PGO</option>
+                            <option value="Panhard">Panhard</option>
+                           <option value="Peugeot">Peugeot</option>
+                            <option value="Renault">Renault</option>
+                           <option value="Simca">Simca</option>
+                            <option value="Smart">Smart</option>
+                           <option value="Venturi">Venturi</option>
+                       </optgroup>
+                       <optgroup label="Хорватия">
+                           <option value="Rimac">Rimac</option>
+                       </optgroup>
+                       <optgroup label="Чехия">
+                           <option value="Jawa">Jawa</option>
+                           <option value="Praga">Praga</option>
+                           <option value="Skoda">Skoda</option>
+                           <option value="Tatra">Tatra</option>
+                       </optgroup>
+                       <optgroup label="Швейцария">
+                           <option value="Monteverdi">Monteverdi</option>
+                           <option value="Rinspeed">Rinspeed</option>
+                       </optgroup>
+                       <optgroup label="Швейция">
+                           <option value="Polestar">Polestar</option>
+                           <option value="Saab">Saab</option>
+                           <option value="Scania">Scania</option>
+                           <option value="Volvo">Volvo</option>
+                       </optgroup>
+                       <optgroup label="ЮАР">
+                           <option value="Rossion">Rossion</option>
+                       </optgroup>
+                       <optgroup label="Япония">
+                           <option value="Acura">Acura</option>
+                           <option value="Daihatsu">Daihatsu</option>
+                           <option value="Datsun">Datsun</option>
+                           <option value="GT-R">GT-R</option>
+                           <option value="Isuzu">Isuzu</option>
+                           <option value="Hino">Hino</option>
+                           <option value="Honda">Honda</option>
+                           <option value="Lexus">Lexus</option>
+                           <option value="Mazda">Mazda</option>
+                           <option value="Mitsubishi">Mitsubishi</option>
+                           <option value="Mitsuoka">Mitsuoka</option>
+                           <option value="Nismo">Nismo</option>
+                           <option value="Nissan">Nissan</option>
+                           <option value="Scion">Scion</option>
+                           <option value="Subaru">Subaru</option>
+                           <option value="Suzuki">Suzuki</option>
+                           <option value="Toyota">Toyota</option>
+                           <option value="Toyota Crown">Toyota Crown</option>
+                           <option value="UD Trucks">UD Trucks</option>
+                       </optgroup>
+
+
+                   </select>
+               </div>
+<!------------------------------ФИЛЬТР ПО АВТО(МОДЕЛЬ)-------------------------------->
+               <div>
+                    <label for="car_model">Модель:</label>
+                    <input type="text" name="car_model" id="car_model" >
+               </div>
+<!------------------------------ФИЛЬТР ПО АВТО(ТОПЛИВО)-------------------------------->
+               <div>
+                    <label for="car_fuel">Топливо:</label>
+
+                    <select id="car_fuel" name="car_fuel">
+                        <option value=''>Любое</option>
+                         <option value='Бензин'>Бензин</option>
+                        <option value='Дизель'>Дизель</option>
+                        <option value='Газ'>Газ</option>
+                        <option value='Электро'>Электро</option>
+                        <option value='Комбинированный'>Комбинированный</option>
+                    </select>
+                </div>
+<!------------------------------ФИЛЬТР ПО АВТО(ГОД ОТ)-------------------------------->
+
+                 <div>
+                    <label for="car_year_from">Год выпуска от:</label>
+                    <input type="text"  id="car_year_from" name="car_year_from">
+                 </div>
+ <!------------------------------ФИЛЬТР ПО АВТО(ГОД ДО)-------------------------------->
+
+                 <div>
+                    <label for="car_year_till">Год выпуска до:</label>
+                    <input type="text"  name="car_year_till" id="car_year_till">
+                 </div>
+  <!------------------------------ФИЛЬТР ПО АВТО(ЦВЕТ)-------------------------------->
+
+                 <div>
+                    <label for="car_color">Цвет:</label>
+                    <input type="text" name="car_color" id="car_color">
+               </div>
+  <!------------------------------ФИЛЬТР ПО АВТО(ТРАНСМИССИЯ)-------------------------------->
+
+                 <div>
+                    <label for="car_transmission">Трансмиссия:</label>
+                    <select id="car_transmission" name="car_transmission">
+                        <option value=''>Любая</option>
+                         <option value='Механика'>Механика</option>
+                        <option value='Автомат'>Автомат</option>
+                        <option value='Робот'>Робот</option>
+                        <option value='Вариатор'>Вариатор</option>
+                        <option value='Двойное сцепление'>Двойное сцепление</option>
+                        <option value='Односкоростная'>Односкоростная</option>
+                        <option value='Полуавтомат'>Полуавтомат</option>
+                        <option value='IVT'>IVT</option>
+                    </select>
+                 </div>
+   <!------------------------------ФИЛЬТР ПО АВТО(ПРИВОД)-------------------------------->
+
+                 <div>
+                    <label for="car_actuator">Привод:</label>
+                    <select id="car_actuator" name="car_actuator">
+                        <option value=''>Любой</option>
+                         <option value='Передний'>Передний</option>
+                        <option value='Задний'>Задний</option>
+                        <option value='Полный'>Полный</option>
+                    </select>
+                </div>
+    <!------------------------------ФИЛЬТР ПО АВТО(КУЗОВ)-------------------------------->
+
+                 <div>
+                    <label for="car_body">Кузов:</label>
+                    <select id="car_body" name="car_body">
+                        <option value=''>Любой</option>
+                         <option value='Седан'>Седан</option>
+                        <option value='Лимузин'>Лимузин</option>
+                        <option value='Хэтчбек'>Хэтчбек</option>
+                        <option value='Лифтбек'>Лифтбек</option>
+                        <option value='Универсал'>Универсал</option>
+                        <option value='Купе'>Купе</option>
+                        <option value='Кабриолет'>Кабриолет</option>
+                        <option value='Родстер'>Родстер</option>
+                        <option value='Тарга'>Тарга</option>
+                        <option value='Минивэн'>Минивэн</option>
+                        <option value='Пикап'>Пикап</option>
+                        <option value='Кроссовер'>Кроссовер</option>
+                        <option value='Купе-кроссовер'>Купе-кроссовер</option>
+                        <option value='Четырёхдверное купе'>Четырёхдверное купе</option>
+                        <option value='Купе-кабриолет'>Купе-кабриолет</option>
+                        <option value='Спидстер'>Спидстер</option>
+                        <option value='Грузовой'>Грузовой</option>
+                    </select>
+                </div>
+    <!------------------------------ФИЛЬТР ПО АВТО(ПРОБЕГ)-------------------------------->
+
+                 <div>
+                    <label for="car_run">Пробег:</label>
+                    <input type="text"   id="car_run" name="car_run">
+                 </div>
+     <!------------------------------ФИЛЬТР ПО АВТО(ОБЪЕМ ДВИГАТЕЛЯ)-------------------------------->
+
+                  <div>
+                    <label for="car_engine_capacity">Объем двигателя:</label>
+                    <input type="text"  name="car_engine_capacity" id="car_engine_capacity" placeholder="1.6">
+                 </div>
+             </fieldset>
+     <!------------------------------ФИЛЬТР ПО ЗНАКОМСТВАМ-------------------------------->
+
+            <fieldset class="filter_line">
+            <legend>Фильтр по знакомствам</legend>
+     <!------------------------------ФИЛЬТР ПО ЗНАКОМСТВАМ(КТО ИЩЕТ)-------------------------------->
+
+                <div>
+                    Кто ищет:
+                     <label for='he' >М</label>
+                    <input type="radio" id="he" name="who" value="М">
+                     <label for='she' >Ж</label>
+                    <input type="radio" id="she" name="who" value="Ж">
+                      <label for='couple' >Пара</label>
+                    <input type="radio" id="couple" name="who" value="Пара">
+                </div>
+     <!------------------------------ФИЛЬТР ПО ЗНАКОМСТВАМ(ВАШ ВОЗРАСТ)-------------------------------->
+
+                <div>
+                    <label for="your_age">Ваш возраст:</label>
+                    <input type="text"   id="your_age" name="your_age">
+                 </div>
+     <!------------------------------ФИЛЬТР ПО ЗНАКОМСТВАМ(С КЕМ)-------------------------------->
+
+                <div>
+                    С кем:
+                     <label for='with_he' >М</label>
+                    <input type="radio" id="with_he" name="who_whis" value="Он">
+                     <label for='with_she' >Ж</label>
+                    <input type="radio" id="with_she" name="who_whis" value="Она">
+                      <label for='with_couple' >Пара</label>
+                    <input type="radio" id="with_couple" name="who_whis" value="Пара">
+                </div>
+     <!------------------------------ФИЛЬТР ПО ЗНАКОМСТВАМ(ПРЕДПОЧТЕНИЯ В ВОЗРАСТЕ ОТ)--------------->
+
+                <div>
+                    <label for="them_age_from">Предпочтения в возрасте от:</label>
+                    <input type="text"   id="them_age_from" name="them_age_from">
+                 </div>
+ <!------------------------------ФИЛЬТР ПО ЗНАКОМСТВАМ(ПРЕДПОЧТЕНИЯ В ВОЗРАСТЕ ДО)--------------->
+
+                <div>
+                    <label for="them_age_till">Предпочтения в возрасте до:</label>
+                    <input type="text"   id="them_age_till" name="them_age_till">
+                 </div>
+     <!------------------------------ФИЛЬТР ПО ЗНАКОМСТВАМ(НАМЕРЕНИЯ)--------------->
+
+                <div>
+                    <label for="intention">Намерение:</label>
+                    <select id="intention" name="intention">
+                        <option value=''>Выбрать цель</option>
+                        <option value='Отношения'>Отношения</option>
+                        <option value='Дружба'>Дружба</option>
+                         <option value='Седан'>Только секс</option>
+                        <option value='Лимузин'>Дружба + секс</option>
+                        <option value='Хэтчбек'>На раз</option>
+                    </select>
+                </div>
+            </fieldset>
+            <input type="submit" value="Найти">
         </form>
     </div>
     <div>{% block content %}{% endblock content %}</div>

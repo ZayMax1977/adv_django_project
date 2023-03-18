@@ -7,6 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
     <script src="{% static 'index/scripts/map-states.js' %}"></script>
+
+    <link rel="shortcut icon" href="{% static 'index/gw.ico' %}" type="image/x-icon"/>
+
     <link rel="stylesheet" type="text/css" href="{% static 'index/style.css' %}">
     <title>GoodWood</title>
 
@@ -16,12 +19,14 @@
         <img src="{% static 'index/gw.png' %}" width="40" height="40" alt="logo">
         <div class="logo-text">GoodWood</div>
         <ul class="clearfix">
-            <li><a href="{% url  'index' %}">Главная</a></li>
-            <li><a href="{% url  'all_advs' %}">Объявления</a></li>
-            <li><a href="{% url  'add' %}">Подать</a></li>
-            <li><a href="#">Интересно</a></li>
-            <li><a href="#">Контакты</a></li>
-            <li><a href="#">Регистрация</a></li>
+            {% for m in menu %}
+            {% if m.page_url == page %}
+            <li ><a class="selected" href="{% url  m.page_url %}">{{ m.title }}</a></li>
+            {% else %}
+                <li ><a  href="{% url  m.page_url %}">{{ m.title }}</a></li>
+            {% endif %}
+
+            {% endfor %}
         </ul>
         <a href="#" id="pull">Меню</a>
     </header>

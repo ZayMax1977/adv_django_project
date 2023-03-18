@@ -21,7 +21,7 @@
     <div class="adv-card">
         <p>{{ adv.title }}</p>
         <p>ID: {{ adv.id }}</p>
-        <p>{{ adv.content }}</p>
+        <p>{{ adv.content|linebreaks }}</p>
 
         <p><a href="{{adv.get_absolute_url}}">{{ adv.rubric.name }}. </a>{{ adv.subrubric }}</p>
 
