@@ -13,6 +13,7 @@ menu = [
 def index(requests):
     context = {
         'menu': menu,
-        'page': 'index'
+        'page': 'index',
+        'title': 'GoodWood. Главная'
     }
     return render(requests,'index.html',context)

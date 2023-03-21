@@ -28,7 +28,8 @@ def all_advs(requests):
         'RUBRIC_ARR': RUBRIC_ARR,
         'arr': [],
         'menu': menu,
-        'page':'all_advs'
+        'page':'all_advs',
+        'title': 'GoodWood. Все объявления'
     }
 
     return render(requests,template_name='all_adv/all_advs.html', context=context)
@@ -66,7 +67,7 @@ def adv(requests,adv_id):
         'RUBRIC_ARR': RUBRIC_ARR,
         'menu': menu,
         'page': 'all_advs',
-        # 'current_rubric': current_rubric
+        'title': 'GoodWood. Объявление',
     }
     return render(requests,'all_adv/adv.html',context)
 
@@ -84,6 +85,7 @@ def by_rubric(requests,rubric_id):
         'RUBRIC_ARR': RUBRIC_ARR,
         'menu': menu,
         'page': 'all_advs',
+        'title': 'GoodWood. По рубрикам'
     }
     return render(requests,'all_adv/by_rubric.html',context)
 
@@ -104,6 +106,7 @@ def by_subrubric(requests,subrubric):
         'current_rubric_for_find' : current_rubric_for_find,
         'menu': menu,
         'page': 'all_advs',
+        'title': 'GoodWood. По подрубрикам'
         }
 
     return render(requests,'all_adv/by_subrubric.html',context)
@@ -119,17 +122,18 @@ class AdvCreateView(CreateView):
         context['rubrics'] = Rubric.objects.all()
         context['menu'] = menu
         context['page'] = 'add'
+        context['title'] = 'GoodWood. Добавить объявление'
 
         return context
 
 def interesting(requests):
-    pass
+    return HttpResponse('Вкладка: Интересно')
 
 def contact(requests):
-    pass
+    return HttpResponse('Вкладка: Контакты')
 
 def log(requests):
-    pass
+    return HttpResponse('Вкладка: Вход')
 
 def pageNotFound(request,exception):
     return HttpResponseNotFound('<h1>Страница не найдена</h1>')
