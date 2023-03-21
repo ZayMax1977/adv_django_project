@@ -1,9 +1,14 @@
 
 {% extends "layout/base.html" %}
-
+{% load all_adv_tags %}
 {% block content %}
 <div>
 <!--    -----------------фильтр по рубриккам-------------------->
+
+
+<!-------------------------пользовательский простой тег для рубрик-------------------->
+{% get_rubrics as rubrics %}
+<!--    ---------------------------------------------------------------------------------->
      Выбор по рубрикам:
     {% for rubric in  rubrics %}
         <a href="{{rubric.get_absolute_url}}">{{rubric.name}}.</a>
@@ -19,21 +24,8 @@
         {% endif  %}
     {% endfor %}
 </div >
+<!----------------------блок объявлений-------------------------------->
 <div class="cards_block">
-<!---------------------список объявлений-------------------------------->
-<!--    {% for adv in  advs %}-->
-<!--        <div class="adv-card">-->
-<!--            <h2><a href="{% url 'adv' adv.id %}">{{ adv.title }}</a></h2>-->
-<!--            <p>ID: {{ adv.id }}</p>-->
-<!--            <p>{{ adv.content }}</p>-->
-
-<!--            Рубрика: <a href="{{adv.get_absolute_url}}">{{ adv.rubric.name }}. </a>-->
-<!--            Подрубрика:<a href="{% url 'by_subrubric'  adv.subrubric   %} ">{{adv.subrubric}}</a>-->
-
-
-<!--            <p>{{ adv.published|date:"d.m.Y H:i:s" }}</p>-->
-<!--        </div>-->
-<!--    {% endfor %}-->
 {% for adv in  advs %}
     <div class="adv-card">
             <div class="card_photo_main"></div>
