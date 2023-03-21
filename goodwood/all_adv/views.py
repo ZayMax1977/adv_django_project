@@ -19,11 +19,9 @@ menu = [
 
 ]
 def all_advs(requests):
-    advs = Adv.objects.filter(is_active='True')
-    rubrics = Rubric.objects.all()
+    advs = Adv.objects.all()
     context ={
-        "advs": advs,
-        "rubrics":rubrics,
+        'advs': advs,
         'SUB_RUBRICS_ARR': SUB_RUBRICS_ARR,
         'RUBRIC_ARR': RUBRIC_ARR,
         'arr': [],
@@ -41,28 +39,11 @@ def find_by_filter(requests):
     else:
         print('Не прошло')
         return render(requests,'all_advs.html')
-    # if request.method == 'POST':
-    #     form = AdvForm(request.POST)
-    #     if form.is_valid():
-    #
-    #         print(form.cleaned_data['my_form_field_name'])
-    #
-    #         return HttpResponseRedirect('/all_adv/')
-    # else:
-    #     form = AdvForm()  # An unbound form
-    #
-    # return render_to_response('create_form.html', {
-    #     'form': form,
-    # })
 
 def adv(requests,adv_id):
-
     adv = Adv.objects.get(pk=adv_id)
-    rubrics = Rubric.objects.all()
-    # current_rubric = Rubric.objects.get(pk=adv_id)
     context = {
         'adv': adv,
-        'rubrics': rubrics,
         'SUB_RUBRICS_ARR': SUB_RUBRICS_ARR,
         'RUBRIC_ARR': RUBRIC_ARR,
         'menu': menu,
@@ -75,11 +56,9 @@ def adv(requests,adv_id):
 
 def by_rubric(requests,rubric_id):
     advs_by_rub = Adv.objects.filter(rubric=rubric_id)
-    rubrics = Rubric.objects.all()
     current_rubric = Rubric.objects.get(pk=rubric_id)
     context = {
         'advs_by_rub':advs_by_rub,
-        'rubrics': rubrics,
         'current_rubric': current_rubric,
         'SUB_RUBRICS_ARR': SUB_RUBRICS_ARR,
         'RUBRIC_ARR': RUBRIC_ARR,
@@ -91,7 +70,6 @@ def by_rubric(requests,rubric_id):
 
 def by_subrubric(requests,subrubric):
     advs_by_subrub = Adv.objects.filter(subrubric=subrubric)
-    rubrics = Rubric.objects.all()
     current_rubric_for_find =''
     for key in RUBRIC_ARR_FOR_FIND:
         if subrubric in key:
@@ -101,8 +79,6 @@ def by_subrubric(requests,subrubric):
         'advs_by_subrub':advs_by_subrub,
         'SUB_RUBRICS_ARR': SUB_RUBRICS_ARR,
         'RUBRIC_ARR': RUBRIC_ARR,
-        'rubrics': rubrics,
-        # 'current_rubric': requests.GET['rubricName'],
         'current_rubric_for_find' : current_rubric_for_find,
         'menu': menu,
         'page': 'all_advs',
