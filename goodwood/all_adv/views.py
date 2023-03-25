@@ -1,11 +1,12 @@
 
 from django.http import HttpResponseRedirect, HttpResponseNotFound, HttpResponse
-from django.shortcuts import render
-from django.urls import reverse_lazy
-from django.utils import inspect
-from django.views.generic import CreateView
+from django.shortcuts import render, get_object_or_404
+# from django.urls import reverse_lazy
+# from django.utils import inspect
+# from django.views.generic import CreateView
 
-from all_adv.forms import AdvForm
+# from all_adv.forms import AdvForm
+from all_adv.forms import AddAdvRealtyForm, AddAdvAutoForm, AddAdvCommon, AddAdvMeettingForm, AddAdvJobForm
 from all_adv.models import Adv, Rubric
 from all_adv.templates.all_adv.rubrics import SUB_RUBRICS_ARR, RUBRIC_ARR, RUBRIC_ARR_FOR_FIND
 
@@ -41,7 +42,8 @@ def find_by_filter(requests):
         return render(requests,'all_advs.html')
 
 def adv(requests,adv_id):
-    adv = Adv.objects.get(pk=adv_id)
+    adv = get_object_or_404(Adv,pk=adv_id)
+    # adv = Adv.objects.get(pk=adv_id)
     context = {
         'adv': adv,
         'SUB_RUBRICS_ARR': SUB_RUBRICS_ARR,
@@ -87,20 +89,74 @@ def by_subrubric(requests,subrubric):
 
     return render(requests,'all_adv/by_subrubric.html',context)
 
-class AdvCreateView(CreateView):
-    template_name = 'all_adv/create_form.html'
-    form_class = AdvForm
-    success_url = reverse_lazy("all_advs")
 
+def  add_adv(request):
+    if request.method == 'POST':
+        form_common = AddAdvCommon(request.POST,request.FILES)
+        form_for_realty = AddAdvRealtyForm(request.POST,request.FILES)
+        form_for_car = AddAdvAutoForm(request.POST,request.FILES)
+        form_for_meetting = AddAdvMeettingForm(request.POST,request.FILES)
+        form_for_job = AddAdvJobForm(request.POST,request.FILES)
+        if form_common.is_valid():
+            form_common.save()
+            return render(request, 'all_adv/success_page.html')
+            # try:
+            #     Adv.objects.create(**form_common.cleaned_data)
+            #     return render(request, 'all_adv/success_page.html')
+            # except:
+            #     form_common.add_error(None,'Ошибка добавления поста')
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['rubrics'] = Rubric.objects.all()
-        context['menu'] = menu
-        context['page'] = 'add'
-        context['title'] = 'GoodWood. Добавить объявление'
+        elif form_for_realty.is_valid():
+            form_for_realty.save()
+            return render(request, 'all_adv/success_page.html')
 
-        return context
+        elif form_for_car.is_valid():
+            form_for_car.save()
+            return render(request, 'all_adv/success_page.html')
+
+        elif form_for_meetting.is_valid():
+            form_for_meetting.save()
+            return render(request, 'all_adv/success_page.html')
+
+        elif form_for_job.is_valid():
+            form_for_job.save()
+            return render(request, 'all_adv/success_page.html')
+
+    else:
+        form_common = AddAdvCommon()
+        form_for_realty = AddAdvRealtyForm()
+        form_for_car = AddAdvAutoForm()
+        form_for_meetting = AddAdvMeettingForm()
+        form_for_job = AddAdvJobForm()
+
+    rubrics = Rubric.objects.all()
+    context = {
+        'form_common': form_common,
+        'form_for_realty': form_for_realty,
+        'form_for_car': form_for_car,
+        'form_for_meetting': form_for_meetting,
+        'form_for_job': form_for_job,
+        'rubrics':rubrics,
+        'menu': menu,
+        'page': 'add',
+        'title': 'GoodWood. Добавить объявление'
+    }
+    return render(request,'all_adv/create_form.html',context)
+
+# class AdvCreateView(CreateView):
+#     template_name = 'all_adv/create_form.html'
+#     form_class = AdvForm
+#     success_url = reverse_lazy("all_advs")
+#
+#
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         context['rubrics'] = Rubric.objects.all()
+#         context['menu'] = menu
+#         context['page'] = 'add'
+#         context['title'] = 'GoodWood. Добавить объявление'
+#
+#         return context
 
 def interesting(requests):
     return HttpResponse('Вкладка: Интересно')

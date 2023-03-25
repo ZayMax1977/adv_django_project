@@ -20,16 +20,19 @@
         {% endif  %}
     {% endfor %}
 
-    <div class="adv-card">
-        <p>{{ adv.title }}</p>
-        <p>ID: {{ adv.id }}</p>
-        <p>{{ adv.content|linebreaks }}</p>
-
-        <p><a href="{{adv.get_absolute_url}}">{{ adv.rubric.name }}. </a>{{ adv.subrubric }}</p>
-
-
-
-        <p>{{ adv.published|date:"d.m.Y H:i:s" }}</p>
+    <div class="adv-card-one adv-card">
+        <div>
+            {% if adv.photo  %}
+            <p><img class='adv_photo' alt='photo' src="{{adv.photo.url}}"></p>
+            {% endif %}
+            </div>
+        <div>
+            <p>{{ adv.title }}</p>
+            <p>ID: {{ adv.id }}</p>
+            <p>{{ adv.content|linebreaks }}</p>
+            <p><a href="{{adv.get_absolute_url}}">{{ adv.rubric.name }}. </a>{{ adv.subrubric }}</p>
+            <p>{{ adv.published|date:"d.m.Y H:i:s" }}</p>
+        </div>
     </div>
 
 {% endblock %}

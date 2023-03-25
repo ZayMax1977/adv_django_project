@@ -3,12 +3,86 @@
 {% block title %}Добавление объявления{% endblock %}
 {% block content %}
 <h2>Добавление объявления</h2>
+<!----------------выбор вида объявления------------------------------------>
+<span class='choose_form_for_realty choose_form' id="choose_form_for_realty" onclick="hidden_block('form_for_realty')">Недвижимость</span>
+<span class='choose_form_for_car choose_form' id="choose_form_for_car" onclick="hidden_block('form_for_car')">Авто</span>
+<span class='choose_form_for_meetting choose_form' id="choose_form_for_meetting" onclick="hidden_block('form_for_meetting')">Знакомства</span>
+<span class='choose_form_for_job choose_form' id="choose_form_for_job" onclick="hidden_block('form_for_job')">Работа</span>
+<span class='choose_form_common choose_form' id="choose_form_common" onclick="hidden_block('form_common')">Другое</span>
+<!----------------конец выбор вида объявления------------------------------------>
+
+<!-------------------форма отправки общая----------------------------------->
+<div class="form_common" id="form_common" hidden >
+    <form action="{% url 'add' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-error">{{ form_common.non_field_errors }}</div>
+        {% for f in  form_common%}
+        <p><label class="form-label" for="{{ f.id_for_label }}">{{ f.label }}:</label> {{ f }}</p>
+        <div class="form-error>">{{ f.errors }}</div>
+        {% endfor %}
+        <button type="submit">Добавить</button>
+    </form>
+</div>
+<!------------------конец форма отправки общая---------------------------------->
+<!-------------------форма отправки недвижимость----------------------------------->
+
+<div  class="form_for_realty" id="form_for_realty" hidden >
+    <form action="{% url 'add' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-error">{{ form_for_realty.non_field_errors }}</div>
+
+         {% for f in  form_for_realty%}
+        <p><label class="form-label" for="{{ f.id_for_label }}">{{ f.label }}:</label> {{ f }}</p>
+        <div class="form-error>">{{ f.errors }}</div>
+        {% endfor %}
+        <button type="submit">Добавить</button>
+    </form>
+</div>
+<!-------------------конец форма отправки недвижимость----------------------------------->
+<!-------------------форма отправки авто----------------------------------->
+<div class="form_for_car" id="form_for_car" hidden >
+    <form action="{% url 'add' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-error">{{ form_for_car.non_field_errors }}</div>
+
+        {% for f in  form_for_car%}
+        <p><label class="form-label" for="{{ f.id_for_label }}">{{ f.label }}:</label> {{ f }}</p>
+        <div class="form-error>">{{ f.errors }}</div>
+        {% endfor %}
+        <button type="submit">Добавить</button>
+    </form>
+</div>
+<!-------------------конец форма отправки авто----------------------------------->
+<!-------------------форма отправки знакомства----------------------------------->
+<div class="form_for_meetting" id="form_for_meetting" hidden >
+    <form action="{% url 'add' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-error">{{ form_for_meetting.non_field_errors }}</div>
+
+        {% for f in  form_for_meetting  %}
+        <p><label class="form-label" for="{{ f.id_for_label }}">{{ f.label }}:</label> {{ f }}</p>
+        <div class="form-error>">{{ f.errors }}</div>
+        {% endfor %}
+        <button type="submit">Добавить</button>
+    </form>
+</div>
+<!-------------------конец форма отправки знакомства----------------------------------->
+<!-------------------форма отправки работа----------------------------------->
+<div class="form_for_job" id="form_for_job" hidden >
+    <form action="{% url 'add' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-error">{{ form_for_job.non_field_errors }}</div>
+
+        {% for f in  form_for_job %}
+        <p><label class="form-label" for="{{ f.id_for_label }}">{{ f.label }}:</label> {{ f }}</p>
+        <div class="form-error>">{{ f.errors }}</div>
+        {% endfor %}
+
+        <button type="submit">Добавить</button>
+    </form>
+</div>
+<!-------------------конец форма отправки работа----------------------------------->
 
 
-<form method="post">
 
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Добавить">
-</form>
 {% endblock %}

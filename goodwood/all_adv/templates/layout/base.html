@@ -14,6 +14,8 @@
     <link rel="stylesheet" type="text/css" href="{% static 'index/style.css' %}">
 <!--    ---------------Стили контента(карточки объявления)------------------------------->
     <link rel="stylesheet" type="text/css" href="{% static 'all_adv/css/style.css' %}">
+    <!--    ---------------Стили формы создания объявления------------------------------->
+    <link rel="stylesheet" type="text/css" href="{% static 'all_adv/css/form-style.css' %}">
 
     <title>{{ title }}</title>
 
@@ -526,17 +528,6 @@
                            <option value="Vauxhall">Vauxhall</option>
                            <option value="Westfield">Westfield</option>
 
-
-
-
-
-
-
-
-
-
-
-
                        </optgroup>
                         <optgroup label="Германия">
                            <option value="ABT">ABT</option>
@@ -589,7 +580,7 @@
                            <option value="Autobianchi">Autobianchi</option>
                             <option value="Bertone">Bertone</option>
                             <option value="Bizzarrini">Bizzarrini</option>
-                           <option value="Cisitalia">Cisitalia</option>
+                           <option value="Cisitalia">Bizzarrini</option>
                            <option value="De Tomaso">De Tomaso</option>
                             <option value="Diatto">Diatto</option>
                            <option value="Ferrari">Ferrari</option>
@@ -597,7 +588,6 @@
                             <option value="Fioravanti">Fioravanti</option>
                            <option value="Lamborghini">Lamborghini</option>
                             <option value="Lancia">Lancia</option>
-                           <option value="Maserati">Maserati</option>
                             <option value="Mazzanti">Mazzanti</option>
                            <option value="OSCA">OSCA</option>
                             <option value="Pagani">Pagani</option>
@@ -696,13 +686,7 @@
                            <option value="Devel">Devel</option>
                             <option value="W Motors">W Motors</option>
                         </optgroup>
-                        <optgroup label="Нидерланды">
-                           <option value="DAF">DAF</option>
-                            <option value="Donkervoort">Donkervoort</option>
-                           <option value="Spyker">Spyker</option>
-                            <option value="Vandenbrink">Vandenbrink</option>
-                            <option value="Vencer">Vencer</option>
-                       </optgroup>
+
                        <optgroup label="Польша">
                            <option value="Arrinera">Arrinera</option>
                         </optgroup>
@@ -783,7 +767,7 @@
                            <option value="Volvo">Volvo</option>
                        </optgroup>
                        <optgroup label="ЮАР">
-                           <option value="Rossion">Rossion</option>
+                           <option value="Rossion">Volvo</option>
                        </optgroup>
                        <optgroup label="Япония">
                            <option value="Acura">Acura</option>
@@ -1014,6 +998,6 @@
 
 </script>
     <script src="{% static 'index/scripts/map-states.js' %}"></script>
-    <script src="{% static 'all_adv/scripts.js' %}"></script>
-
+<!--    <script src="{% static 'all_adv/scripts.js' %}"></script>-->
+    <script src="{% static 'all_adv/js/make-hidden-type-form.js' %}"></script>
 </body>

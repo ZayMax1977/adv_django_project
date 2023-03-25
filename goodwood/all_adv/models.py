@@ -8,12 +8,12 @@ class Adv(models.Model):
 
     # -----------------Общие----------------------------------
     is_active = models.BooleanField(default=True)
-    title = models.CharField(max_length=50,verbose_name='Наименование', help_text='Это хелп')
+    title = models.CharField(max_length=50,verbose_name='Заголовок', help_text='Это хелп')
     transaction = models.ForeignKey('Transaction',null=True,on_delete=models.PROTECT, verbose_name='Вид сделки')
     region = models.ForeignKey('Region', null=True, on_delete=models.PROTECT, verbose_name='Регион')
 
-    city = models.CharField(max_length=50, verbose_name='Город',null=True)
-    district_city = models.CharField(max_length=50, verbose_name='Район города',default='',blank =True)
+    city = models.CharField(max_length=50, verbose_name='Город',null=True,blank =True)
+    district_city = models.CharField(max_length=50, verbose_name='Район города',blank =True, null=True)
     photo = models.ImageField(upload_to='photo/%Y/%m/%d/',
                               null=True, blank=True)
 
@@ -64,6 +64,7 @@ class Adv(models.Model):
     def get_absolute_url(self):
         return reverse('by_rubric',kwargs={'rubric_id': self.rubric_id})
 
+
     def __str__(self):
         return self.title
 
@@ -113,6 +114,7 @@ class CarMark(models.Model):
     class Meta:
         verbose_name_plural = 'Марки'
         verbose_name = 'Марка'
+        ordering = ['name', ]
 
 class LawStatus(models.Model):
     name = models.CharField(max_length=70,db_index=True,verbose_name='Статус')

@@ -1,16 +1,18 @@
 from django.contrib import admin
 
 # Register your models here.
-from all_adv.models import Adv, Rubric, Transaction, Region, CarMark, LawStatus, Subject, CarFuel, CarTransmission, CarActuator, CarBody, \
-    Intention
+from all_adv.models import Adv, Rubric, Transaction, Region, CarMark, LawStatus, Subject, CarFuel, CarTransmission, CarActuator, CarBody, Intention
 
 
 class AdvAdmin(admin.ModelAdmin):
-    list_display = ('id','is_active','title','rubric',"subrubric",'transaction','law_status','region','city','content','price','user_name',
+    list_display = ('id','photo','is_active','title','rubric',"subrubric",'transaction','law_status','region','city','content',
+                    'price',
+    'user_name',
     'phone_number','street',
                     'floors','floor','rooms','square_rooms','square_land','car_mark','car_model','car_color','car_year','published')
     list_display_links = ('title', 'content')
     search_fields = ('is_active','title','price','rubric','subrubric','transaction','region','city')
+
 
 class RubricAdmin(admin.ModelAdmin):
     list_display = ('name',)
@@ -78,6 +80,8 @@ admin.site.register(CarFuel,CarFuelAdmin)
 admin.site.register(CarActuator,CarActuatorAdmin)
 admin.site.register(CarBody,CarBodyAdmin)
 admin.site.register(Intention,IntentionAdmin)
+admin.site.register(CarTransmission,CarTransmissionAdmin)
+
 
 
 
