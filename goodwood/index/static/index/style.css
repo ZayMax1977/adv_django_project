@@ -1,8 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Shantell+Sans:wght@300&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville&family=Roboto+Flex:opsz,wght@8..144,500&family=Shantell+Sans:wght@300&family=Unna&display=swap');
 body{
-
-
     min-height: 100vh;
     line-height: 1.5;
     background: linear-gradient(to top, #4C74CD, #C7D3EF);
@@ -23,7 +21,7 @@ header {
 header ul {
     padding: 0;
     margin: 0 auto;
-    width: 600px;
+    width: 850px;
     height: 40px;
 }
 
@@ -39,7 +37,7 @@ header li {
 }
 /* ------------------------------------------------------конец блока логотипа с текстом--------------------- */
 
-.clearfix:before,
+/*.clearfix:before,
 .clearfix:after {
     content: " ";
     display: table;
@@ -49,7 +47,7 @@ header li {
 }
 .clearfix {
     *zoom: 1;
-}
+}*/
 
 header a {
     color: #fff;
@@ -65,9 +63,9 @@ header li a {
     -moz-box-sizing:border-box;
     -webkit-box-sizing:border-box;
 }
-header li:last-child a {
+/*header li:last-child a {
     color:#C7D3EF;
-}
+}*/
 header a:hover, nav a:active {
     background: linear-gradient(to top, #93ade4, #C7D3EF);
     color:#15FC0A;

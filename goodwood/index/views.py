@@ -7,7 +7,8 @@ menu = [
     {'title': 'Подать', 'page_url': 'add'},
     {'title': 'Интересно', 'page_url': 'interesting'},
     {'title': 'Контакты', 'page_url': 'contact'},
-    {'title': 'Регистрация', 'page_url': 'log'},
+    {'title': 'Регистрация', 'page_url': 'register'},
+    {'title': 'Вход', 'page_url': 'login'},
 
 ]
 def index(requests):

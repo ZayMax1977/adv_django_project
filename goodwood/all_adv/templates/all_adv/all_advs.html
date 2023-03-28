@@ -24,9 +24,11 @@
         {% endif  %}
     {% endfor %}
 </div >
+
 <!----------------------блок объявлений-------------------------------->
+
 <div class="cards_block">
-{% for adv in  advs %}
+{% for adv in  page_obj %}
     <div class="adv-card">
             <div class="card_photo_main"></div>
             {% if adv.rooms %}
@@ -42,4 +44,6 @@
 {% endfor %}
 
 </div>
+
+
 {% endblock %}

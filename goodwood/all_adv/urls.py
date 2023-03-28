@@ -1,22 +1,22 @@
 from django.urls import path
 
-from .views import by_rubric, all_advs, adv, by_subrubric,  find_by_filter, interesting, contact, log, add_adv
+from .views import find_by_filter, interesting, contact,add_adv, AllAdvs, ByRubric, BySubRubric, OneAdv, register, login
 
 urlpatterns = [
-    path('', all_advs, name='all_advs'),
-    # path('add/', AdvCreateView.as_view(), name='add'),
+    path('', AllAdvs.as_view(), name='all_advs'),
     path('add/', add_adv, name='add'),
 
     path('interesting/', interesting, name='interesting'),
     path('contact/',contact, name='contact'),
-    path('login/', log, name='log'),
+    path('login/', login, name='login'),
+    path('register/', register, name='register'),
 
     path('find_by_filter/', find_by_filter, name='find_by_filter'),
 
-    path('<int:rubric_id>/', by_rubric, name='by_rubric'),
-    path('<str:subrubric>/', by_subrubric, name='by_subrubric'),
+    path('<int:rubric_id>/', ByRubric.as_view(), name='by_rubric'),
+    path('<str:subrubric>/', BySubRubric.as_view(), name='by_subrubric'),
 
-    path('adv/<int:adv_id>/', adv, name='adv'),
+    path('adv/<int:adv_id>/', OneAdv.as_view(), name='adv'),
 
 ]
 

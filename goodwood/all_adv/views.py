@@ -1,93 +1,78 @@
 
 from django.http import HttpResponseRedirect, HttpResponseNotFound, HttpResponse
-from django.shortcuts import render, get_object_or_404
-# from django.urls import reverse_lazy
-# from django.utils import inspect
-# from django.views.generic import CreateView
-
-# from all_adv.forms import AdvForm
+from django.shortcuts import render
+from django.views.generic import ListView, DetailView
 from all_adv.forms import AddAdvRealtyForm, AddAdvAutoForm, AddAdvCommon, AddAdvMeettingForm, AddAdvJobForm
 from all_adv.models import Adv, Rubric
 from all_adv.templates.all_adv.rubrics import SUB_RUBRICS_ARR, RUBRIC_ARR, RUBRIC_ARR_FOR_FIND
+from .utils import *
 
-menu = [
-    {'title': 'Главная','page_url':'index'},
-    {'title': 'Объявления', 'page_url': 'all_advs'},
-    {'title': 'Подать', 'page_url': 'add'},
-    {'title': 'Интересно', 'page_url': 'interesting'},
-    {'title': 'Контакты', 'page_url': 'contact'},
-    {'title': 'Регистрация', 'page_url': 'log'},
-
-]
-def all_advs(requests):
-    advs = Adv.objects.all()
-    context ={
-        'advs': advs,
-        'SUB_RUBRICS_ARR': SUB_RUBRICS_ARR,
-        'RUBRIC_ARR': RUBRIC_ARR,
-        'arr': [],
-        'menu': menu,
-        'page':'all_advs',
-        'title': 'GoodWood. Все объявления'
-    }
-
-    return render(requests,template_name='all_adv/all_advs.html', context=context)
-
-def find_by_filter(requests):
-    if requests.method == 'GET':
-        print(requests.GET)
-        return HttpResponseRedirect('/all_adv/')
-    else:
-        print('Не прошло')
-        return render(requests,'all_advs.html')
-
-def adv(requests,adv_id):
-    adv = get_object_or_404(Adv,pk=adv_id)
-    # adv = Adv.objects.get(pk=adv_id)
-    context = {
-        'adv': adv,
-        'SUB_RUBRICS_ARR': SUB_RUBRICS_ARR,
-        'RUBRIC_ARR': RUBRIC_ARR,
-        'menu': menu,
-        'page': 'all_advs',
-        'title': 'GoodWood. Объявление',
-    }
-    return render(requests,'all_adv/adv.html',context)
+class AllAdvs(DataMixin,ListView):
+    model = Adv
+    template_name = 'all_adv/all_advs.html'
+    context_object_name = 'advs'
 
 
 
-def by_rubric(requests,rubric_id):
-    advs_by_rub = Adv.objects.filter(rubric=rubric_id)
-    current_rubric = Rubric.objects.get(pk=rubric_id)
-    context = {
-        'advs_by_rub':advs_by_rub,
-        'current_rubric': current_rubric,
-        'SUB_RUBRICS_ARR': SUB_RUBRICS_ARR,
-        'RUBRIC_ARR': RUBRIC_ARR,
-        'menu': menu,
-        'page': 'all_advs',
-        'title': 'GoodWood. По рубрикам'
-    }
-    return render(requests,'all_adv/by_rubric.html',context)
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        send_to_mixin = self.get_user_context(title = 'GoodWood. Все объявления')
+        context = dict(list(context.items()) + list(send_to_mixin.items()))
+        return context
 
-def by_subrubric(requests,subrubric):
-    advs_by_subrub = Adv.objects.filter(subrubric=subrubric)
-    current_rubric_for_find =''
-    for key in RUBRIC_ARR_FOR_FIND:
-        if subrubric in key:
-            current_rubric_for_find = key[subrubric]
+    def get_queryset(self):
 
-    context = {
-        'advs_by_subrub':advs_by_subrub,
-        'SUB_RUBRICS_ARR': SUB_RUBRICS_ARR,
-        'RUBRIC_ARR': RUBRIC_ARR,
-        'current_rubric_for_find' : current_rubric_for_find,
-        'menu': menu,
-        'page': 'all_advs',
-        'title': 'GoodWood. По подрубрикам'
-        }
+        return Adv.objects.filter(is_active=True)
 
-    return render(requests,'all_adv/by_subrubric.html',context)
+
+
+class ByRubric(DataMixin,ListView):
+    model = Adv
+    template_name = 'all_adv/by_rubric.html'
+    context_object_name = 'advs_by_rub'
+    allow_empty = False
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        send_to_mixin = self.get_user_context(title='GoodWood. По рубрикам',current_rubric = Rubric.objects.get(pk=self.kwargs['rubric_id']))
+        context = dict(list(context.items()) + list(send_to_mixin.items()))
+        return context
+
+    def get_queryset(self):
+        return Adv.objects.filter(rubric_id=self.kwargs['rubric_id'],is_active=True)
+
+class BySubRubric(DataMixin,ListView):
+    model = Adv
+    template_name = 'all_adv/by_subrubric.html'
+    context_object_name = 'advs_by_subrub'
+
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        current_rubric_for_find = ''
+        for key in RUBRIC_ARR_FOR_FIND:
+            if self.kwargs['subrubric'] in key:
+                current_rubric_for_find = key[self.kwargs['subrubric']]
+
+        send_to_mixin = self.get_user_context(title='GoodWood. По подрубрикам', current_rubric_for_find=current_rubric_for_find)
+        context = dict(list(context.items()) + list(send_to_mixin.items()))
+        return context
+
+    def get_queryset(self):
+        return Adv.objects.filter(subrubric=self.kwargs['subrubric'], is_active=True)
+
+class OneAdv(DataMixin,DetailView):
+    model = Adv
+    template_name = 'all_adv/adv.html'
+    pk_url_kwarg = 'adv_id'
+    context_object_name = 'adv'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        send_to_mixin = self.get_user_context(title='GoodWood. Объявление')
+        context = dict(list(context.items()) + list(send_to_mixin.items()))
+        return context
 
 
 def  add_adv(request):
@@ -100,11 +85,6 @@ def  add_adv(request):
         if form_common.is_valid():
             form_common.save()
             return render(request, 'all_adv/success_page.html')
-            # try:
-            #     Adv.objects.create(**form_common.cleaned_data)
-            #     return render(request, 'all_adv/success_page.html')
-            # except:
-            #     form_common.add_error(None,'Ошибка добавления поста')
 
         elif form_for_realty.is_valid():
             form_for_realty.save()
@@ -143,29 +123,23 @@ def  add_adv(request):
     }
     return render(request,'all_adv/create_form.html',context)
 
-# class AdvCreateView(CreateView):
-#     template_name = 'all_adv/create_form.html'
-#     form_class = AdvForm
-#     success_url = reverse_lazy("all_advs")
-#
-#
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         context['rubrics'] = Rubric.objects.all()
-#         context['menu'] = menu
-#         context['page'] = 'add'
-#         context['title'] = 'GoodWood. Добавить объявление'
-#
-#         return context
-
 def interesting(requests):
     return HttpResponse('Вкладка: Интересно')
 
 def contact(requests):
     return HttpResponse('Вкладка: Контакты')
 
-def log(requests):
+def login(requests):
     return HttpResponse('Вкладка: Вход')
-
+def register(requests):
+    return HttpResponse('Вкладка: Регистрация')
 def pageNotFound(request,exception):
     return HttpResponseNotFound('<h1>Страница не найдена</h1>')
+
+def find_by_filter(requests):
+    if requests.method == 'GET':
+        print(requests.GET)
+        return HttpResponseRedirect('/all_adv/')
+    else:
+        print('Не прошло')
+        return render(requests,'all_advs.html')
