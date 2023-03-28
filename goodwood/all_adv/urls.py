@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import find_by_filter, interesting, contact,add_adv, AllAdvs, ByRubric, BySubRubric, OneAdv, register, login
+from .views import find_by_filter, interesting, contact, add_adv, AllAdvs, ByRubric, BySubRubric, OneAdv,  login, RegisterUser
 
 urlpatterns = [
     path('', AllAdvs.as_view(), name='all_advs'),
@@ -9,7 +9,7 @@ urlpatterns = [
     path('interesting/', interesting, name='interesting'),
     path('contact/',contact, name='contact'),
     path('login/', login, name='login'),
-    path('register/', register, name='register'),
+    path('register/', RegisterUser.as_view(), name='register'),
 
     path('find_by_filter/', find_by_filter, name='find_by_filter'),
 

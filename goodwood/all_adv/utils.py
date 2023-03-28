@@ -18,7 +18,10 @@ class DataMixin:
     def get_user_context(self,**kwargs):
         context = kwargs
         context['menu'] = menu
+        # для показа активности страницы затемнением кнопки
+        # использовал в меню base.html приложения all_adv
         context['page'] = 'all_advs'
+        # -----------------------------------
         context['SUB_RUBRICS_ARR'] = SUB_RUBRICS_ARR
         context['RUBRIC_ARR'] = RUBRIC_ARR
         return  context
