@@ -63,13 +63,22 @@ header li a {
     -moz-box-sizing:border-box;
     -webkit-box-sizing:border-box;
 }
-/*header li:last-child a {
-    color:#C7D3EF;
+/*header li a:last-child{
+    float:left;
 }*/
-header a:hover, nav a:active {
+/*.reg-log a:last-child{
+    float:left;
+}*/
+header a:hover, nav a:active  {
     background: linear-gradient(to top, #93ade4, #C7D3EF);
     color:#15FC0A;
 }
+/*header li:last-child{
+    float:right;
+}*/
+/*.button-reg{
+     float:right;
+}*/
 .selected{
      background: linear-gradient(to top, #93ade4, #C7D3EF);
     color:#15FC0A;

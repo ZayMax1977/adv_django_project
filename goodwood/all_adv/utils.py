@@ -6,8 +6,8 @@ menu = [
     {'title': 'Подать', 'page_url': 'add'},
     {'title': 'Интересно', 'page_url': 'interesting'},
     {'title': 'Контакты', 'page_url': 'contact'},
-    {'title': 'Регистрация', 'page_url': 'register'},
-    {'title': 'Вход', 'page_url': 'login'},
+    # {'title': 'Регистрация', 'page_url': 'register'},
+    # {'title': 'Вход', 'page_url': 'login'},
 
 ]
 
@@ -20,8 +20,6 @@ class DataMixin:
         context['menu'] = menu
         # для показа активности страницы затемнением кнопки
         # использовал в меню base.html приложения all_adv
-        context['page'] = 'all_advs'
-        # -----------------------------------
         context['SUB_RUBRICS_ARR'] = SUB_RUBRICS_ARR
         context['RUBRIC_ARR'] = RUBRIC_ARR
         return  context

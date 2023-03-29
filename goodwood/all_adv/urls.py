@@ -1,15 +1,17 @@
 from django.urls import path
-
-from .views import find_by_filter, interesting, contact, add_adv, AllAdvs, ByRubric, BySubRubric, OneAdv,  login, RegisterUser
+from django.views.decorators.cache import cache_page
+from .views import find_by_filter, interesting, add_adv, AllAdvs, ByRubric, BySubRubric, OneAdv, RegisterUser, LoginUser, \
+    logout_user, ContactFormOur
 
 urlpatterns = [
     path('', AllAdvs.as_view(), name='all_advs'),
     path('add/', add_adv, name='add'),
 
     path('interesting/', interesting, name='interesting'),
-    path('contact/',contact, name='contact'),
-    path('login/', login, name='login'),
+    path('contact/',ContactFormOur.as_view(), name='contact'),
+    path('login/', LoginUser.as_view(), name='login'),
     path('register/', RegisterUser.as_view(), name='register'),
+    path('logout/', logout_user, name='logout'),
 
     path('find_by_filter/', find_by_filter, name='find_by_filter'),
 
