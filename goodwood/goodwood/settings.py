@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'captcha' ,
 
     'all_adv.apps.AllAdvConfig',
+    'posts.apps.PostConfig',
     'index.apps.IndexConfig'
     
 

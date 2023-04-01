@@ -58,3 +58,7 @@
 .active-page{
     color: red;
 }
+.pointer-curve{
+    cursor: pointer;
+}
+

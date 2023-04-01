@@ -11,7 +11,8 @@
 
     <link rel="shortcut icon" href="{% static 'all_adv/images/gw.ico' %}" type="image/x-icon"/>
 <!--    ---------------Стили базового шаблона------------------------------------------->
-    <link rel="stylesheet" type="text/css" href="{% static 'index/style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'index/css/style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'posts/css/style.css' %}">
 <!--    ---------------Стили контента(карточки объявления)------------------------------->
     <link rel="stylesheet" type="text/css" href="{% static 'all_adv/css/style.css' %}">
     <!--    ---------------Стили формы создания объявления------------------------------->
@@ -22,7 +23,7 @@
 </head>
 <body>
     <header class="clearfix">
-        <img src="{% static 'index/gw.png' %}" width="40" height="40" alt="logo">
+        <img src="{% static 'index/img/gw.png' %}" width="40" height="40" alt="logo">
         <div class="logo-text">GoodWood</div>
         <ul class="clearfix">
             {% for m in menu %}
@@ -46,7 +47,7 @@
         <a href="#" id="pull">Меню</a>
     </header>
 
-  <div class="block-popular">
+    <div class="block-popular">
 
                 <span class="popular-elem">Популярное в поиске:</span>
                 <a href="/">Toyota Camry 2008</a>,
@@ -62,17 +63,32 @@
                 <a href="/">Челябинск </a><br>
             </div>
 
+
+
 <div class="main-screen">
 <!--    {% load cache %}-->
 <!--    {% cache 60 filter %}-->
+
+
     <div class="filter-block">
         <form method="GET" action='{% url "find_by_filter" %}'>
 
             Поиск по фильтрам:
 <!-- --------------------------ОБЩИЙ ФИЛЬТР (РЕГИОН)-------------------------------------------->
-            <fieldset class="filter_line">
-            <legend>Общий фильтр</legend>
-               <div>
+            <fieldset class="filter_line" >
+            <legend>Общий фильтр
+
+                <img class='pointer-curve' src="{% static 'all_adv/images/curve-down.png' %}" width="20" height="20" alt="curve"
+                     id="pointer_curve_down_0"
+                      onclick="show_filter('common-filter','pointer_curve_down_0','pointer_curve_down_1')">
+
+                 <img class='pointer-curve' src="{% static 'all_adv/images/curve-up.png' %}" width="20" height="20" alt="curve"
+                      id="pointer_curve_up_1"
+                       hidden onclick="show_filter('common-filter','pointer_curve_down_0','pointer_curve_up_1')">
+
+            </legend>
+                <div id="common-filter" hidden>
+               <div >
                    <label for="list_states">Регион:</label>
                    <select name="region" id="list_states">
                        <option value="">Все субъекты...</option>
@@ -310,13 +326,21 @@
                      <label for="filter_price">Поиск по цене:</label>
                     <input type="text" name="filter_price" id="filter_price"  >
                 </div>
-
+            </div>
             </fieldset>
+
 <!-- --------------------------ФИЛЬТР ПО НЕДВИЖИМОСТИ--------------------------------------->
 
             <fieldset class="filter_line">
-            <legend>Фильтр для недвижимости</legend>
+            <legend>Фильтр для недвижимости
+
+                <img class='pointer-curve' src="{% static 'all_adv/images/curve-down.png' %}" width="20" height="20" alt="curve"
+                     id="pointer_curve_2" onclick="show_filter('realty-filter','pointer_curve_2','pointer_curve_3')">
+
+                 <img class='pointer-curve' src="{% static 'all_adv/images/curve-up.png' %}" width="20" height="20" alt="curve"
+                     id="pointer_curve_3"  hidden onclick="show_filter('realty-filter','pointer_curve_2','pointer_curve_3')"></legend>
 <!------------------------------ФИЛЬТР ПО НЕДВИЖИМОСТИ(Цена от)------------------------------>
+                <div id="realty-filter" hidden>
                 <div>
                     <label for="filter_price_min">Цена от:</label>
                     <input type="text" name="filter_price_min" id="filter_price_min" >
@@ -388,13 +412,21 @@
                     <label for="land_square">Площадь земли:</label>
                     <input type="number" name="land_square"  id="land_square">
                 </div>
-
+            </div>
             </fieldset>
+
+
 <!------------------------------ФИЛЬТР ПО АВТО-------------------------------->
              <fieldset class="filter_line">
-            <legend>Фильтр по авто</legend>
+            <legend>Фильтр по авто
+                <img class='pointer-curve' src="{% static 'all_adv/images/curve-down.png' %}" width="20" height="20" alt="curve"
+                     id="pointer_curve_down_4" onclick="show_filter('auto-filter','pointer_curve_down_4','pointer_curve_up_5')">
+
+                 <img class='pointer-curve' src="{% static 'all_adv/images/curve-up.png' %}" width="20" height="20" alt="curve"
+                     id="pointer_curve_up_5"  hidden onclick="show_filter('auto-filter','pointer_curve_down_4','pointer_curve_up_5')"></legend>
 
 <!------------------------------ФИЛЬТР ПО АВТО(МАРКА)-------------------------------->
+                 <div id="auto-filter" hidden>
                <div>
                    <label for="car_mark">Марки:</label>
                    <select name="car_mark" id="car_mark" >
@@ -905,13 +937,22 @@
                     <label for="car_engine_capacity">Объем двигателя:</label>
                     <input type="text"  name="car_engine_capacity" id="car_engine_capacity" placeholder="1.6">
                  </div>
+                 </div>
              </fieldset>
+
+
      <!------------------------------ФИЛЬТР ПО ЗНАКОМСТВАМ-------------------------------->
 
             <fieldset class="filter_line">
-            <legend>Фильтр по знакомствам</legend>
-     <!------------------------------ФИЛЬТР ПО ЗНАКОМСТВАМ(КТО ИЩЕТ)-------------------------------->
+            <legend>Фильтр по знакомствам
+            <img class='pointer-curve' src="{% static 'all_adv/images/curve-down.png' %}" width="20" height="20" alt="curve"
+                     id="pointer_curve_down_6" onclick="show_filter('meetting-filter','pointer_curve_down_6','pointer_curve_up_7')">
 
+                 <img class='pointer-curve' src="{% static 'all_adv/images/curve-up.png' %}" width="20" height="20" alt="curve"
+                     id="pointer_curve_up_7"  hidden onclick="show_filter('meetting-filter','pointer_curve_down_6','pointer_curve_up_7')">
+            </legend>
+     <!------------------------------ФИЛЬТР ПО ЗНАКОМСТВАМ(КТО ИЩЕТ)-------------------------------->
+<div id="meetting-filter" hidden>
                 <div>
                     Кто ищет:
                      <label for='he' >М</label>
@@ -963,14 +1004,16 @@
                         <option value='Хэтчбек'>На раз</option>
                     </select>
                 </div>
+            </div>
             </fieldset>
             <input type="submit" value="Найти">
         </form>
     </div>
-    <div>
+
+<div>
 <!--{% endcache %}-->
         {% block content %}
-        {% endblock content %}
+        {% endblock %}
 <!--       ---------------пагинация--------------------->
 {% if page_obj.has_other_pages  %}
         <nav>

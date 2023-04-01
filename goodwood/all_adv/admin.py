@@ -5,13 +5,10 @@ from all_adv.models import Adv, Rubric, Transaction, Region, CarMark, LawStatus,
 
 
 class AdvAdmin(admin.ModelAdmin):
-    list_display = ('id','photo','is_active','title','rubric',"subrubric",'transaction','law_status','region','city','content',
-                    'price',
-    'user_name',
-    'phone_number','street',
-                    'floors','floor','rooms','square_rooms','square_land','car_mark','car_model','car_color','car_year','published')
-    list_display_links = ('title', 'content')
-    search_fields = ('is_active','title','price','rubric','subrubric','transaction','region','city')
+    list_display = ('id','is_active','title','rubric',"subrubric",'law_status','region','city',
+                    'price','phone_number','street','car_mark','car_model','car_color','car_year','published',)
+    list_display_links = ('title',)
+    search_fields = ('is_active','title','price','rubric','subrubric','transaction','region','city',)
 
 
 class RubricAdmin(admin.ModelAdmin):

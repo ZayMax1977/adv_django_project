@@ -5,24 +5,6 @@ from .models import *
 from captcha.fields import CaptchaField, CaptchaTextInput
 
 
-# class AddAdvForm(forms.ModelForm):
-#     def __init__(self,*args,**kwargs):
-#         super().__init__(*args,**kwargs)
-#         self.fields['transaction'].empty_label = ''
-#     #     И тд
-#
-#     class Meta:
-#         model = Adv
-#         fields = ['title','transaction','rubric','subrubric','region',
-#         'city','district_city','user_name','phone_number','content','photo','price','street','floors',
-#          'floor','rooms','square_rooms','square_land','law_status','ower','car_mark',
-#          'car_model',"car_year",'car_fuel','car_color',"car_body","car_actuator","car_transmission",
-#         "car_run","car_engine_capacity","who","whom",'your_age',"intention_age","intention","salary","mode"]
-#         widgets = {
-#             'title': forms.TextInput(attrs={'class':'form-input'}),
-#             'content': forms.Textarea(attrs={'cols':100,'rows':10}),
-#         #     и тд
-#         }
 
 class AddAdvCommon(forms.ModelForm):
 

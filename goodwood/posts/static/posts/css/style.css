@@ -1,0 +1,18 @@
+/*-------------------Блок статья--------------------------------*/
+
+.one_post_block{
+    width:80%;
+    border: 1px solid white;
+    margin:0 auto;
+
+}
+/*.block-posts{
+    height:100vh;
+}*/
+
+.block-category{
+    width:80%;
+      margin:0 auto;
+      font-size:2vh;
+      text-align: center;
+}

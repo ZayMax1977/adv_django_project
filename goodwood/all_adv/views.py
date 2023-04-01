@@ -19,7 +19,7 @@ class AllAdvs(DataMixin,ListView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         # для показа активности страницы затемнением кнопки
-        # использовал в меню base.html приложения all_adv
+        # использовал в меню base_index.html приложения all_adv
         send_to_mixin = self.get_user_context(title = 'GoodWood. Все объявления',page='all_advs')
         context = dict(list(context.items()) + list(send_to_mixin.items()))
         return context
@@ -128,8 +128,6 @@ def  add_adv(request):
 
         return render(request,'all_adv/create_form.html',context)
 
-def interesting(request):
-    return HttpResponse('Вкладка: Интересно')
 
 
 class ContactFormOur(DataMixin, FormView):

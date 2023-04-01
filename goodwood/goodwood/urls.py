@@ -26,8 +26,7 @@ urlpatterns = [
     path('index/', include('index.urls')),
     path('all_adv/', include('all_adv.urls')),
     path('captcha/', include('captcha.urls')),
-
-
+    path('posts/', include('posts.urls')),
 ]
 
 if settings.DEBUG:

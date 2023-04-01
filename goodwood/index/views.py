@@ -5,7 +5,7 @@ menu = [
     {'title': 'Главная','page_url':'index'},
     {'title': 'Объявления', 'page_url': 'all_advs'},
     {'title': 'Подать', 'page_url': 'add'},
-    {'title': 'Интересно', 'page_url': 'interesting'},
+    # {'title': 'Интересно', 'page_url': 'interesting'},
     {'title': 'Контакты', 'page_url': 'contact'},
     {'title': 'Регистрация', 'page_url': 'register'},
     {'title': 'Вход', 'page_url': 'login'},
@@ -17,4 +17,4 @@ def index(requests):
         'page': 'index',
         'title': 'GoodWood. Главная'
     }
-    return render(requests,'index.html',context)
+    return render(requests,'index/index.html',context)

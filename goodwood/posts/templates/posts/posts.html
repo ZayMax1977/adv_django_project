@@ -1,0 +1,44 @@
+{% extends "./base_posts.html" %}
+
+{% block content %}
+
+
+<div >
+<div class="block-category">
+   Категории:
+{% for c in category %}
+    <a href="">{{ c.name }}   </a>
+{% endfor %}
+</div>
+
+
+<div  class="block-posts">
+<!--{% for post in  posts %}-->
+<!--    <div class="one_post_block">-->
+
+<!--            <div>{{post.title}}</div>-->
+<!--        <p><img class='' alt='photo' src="{{post.photo.url}}" width="100" height=auto></p>-->
+
+<!--            <div>Автор: {{ post.author }}, От {{ adv.published|date:"d.m.Y H:i:s" }}</div>-->
+<!--            <div>{{ post.content|truncatewords:50 }}</div>-->
+<!--    </div>-->
+<!--{% endfor %}-->
+
+<!--</div>-->
+
+
+{% for post in  page_obj %}
+    <div class="one_post_block">
+            <div class="post_photo_main"></div>
+                <div><a href=''>{{ post.title }}</a>  </div>
+            <p><img class='' alt='photo' src="{{post.photo.url}}" width="100" height=auto></p>
+
+            <div>Автор: {{ post.author }}, От {{ post.published|date:"d.m.Y H:i:s" }}</div>
+           <div>{{ post.content|truncatewords:50 }}</div>
+    </div>
+{% endfor %}
+
+
+</div>
+</div>
+{% endblock %}
